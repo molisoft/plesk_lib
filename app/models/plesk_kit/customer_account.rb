@@ -4,11 +4,6 @@ module PleskKit
     has_many :subscriptions
     belongs_to :server
 
-
-
-
-
-
     # # #
     # Methods for sending brand new customer account to Plesk
     # # #
@@ -59,9 +54,29 @@ module PleskKit
     # # #
 
     def convert_to_reseller
-      nil
+      #TODO conversion
+      reseller = PleskKit::ResellerAccount.new
+      attrs = ['cname','login','passwd','pname']
+      attrs.each do |a|
+        reseller[a] = self[a]
+      end
+      reseller.save
+      cus_sub_count = self.subscriptions.count
+      self.subscriptions.each do |s|
+        s.customer_account_id = nil
+        s.reseller_account_id = reseller.id
+        s.save
+      end
+      raise 'something went wrong' if reseller.reload.subscriptions.count != cus_sub_count
+      PleskKit::Communicator.pack_and_play_with reseller, self
+      #post_conversion_destroy
+      #reseller_account
     end
 
+    def post_conversion_destroy
+      #self.destroy
+      true
+    end
 
   end
 end
