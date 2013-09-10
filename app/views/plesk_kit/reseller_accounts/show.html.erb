@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Cname:</b>
+  <%= @reseller_account.cname %>
+</p>
+
+<p>
+  <b>Pname:</b>
+  <%= @reseller_account.pname %>
+</p>
+
+<p>
+  <b>Login:</b>
+  <%= @reseller_account.login %>
+</p>
+
+<p>
+  <b>Passwd:</b>
+  <%= @reseller_account.passwd %>
+</p>
+
+
+<%= link_to 'Edit', edit_reseller_account_path(@reseller_account) %> |
+<%= link_to 'Back', reseller_accounts_path %>

@@ -1,0 +1,29 @@
+<h1>Listing reseller_accounts</h1>
+
+<table>
+  <tr>
+    <th>Cname</th>
+    <th>Pname</th>
+    <th>Login</th>
+    <th>Passwd</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @reseller_accounts.each do |reseller_account| %>
+  <tr>
+    <td><%= reseller_account.cname %></td>
+    <td><%= reseller_account.pname %></td>
+    <td><%= reseller_account.login %></td>
+    <td><%= reseller_account.passwd %></td>
+    <td><%= link_to 'Show', reseller_account %></td>
+    <td><%= link_to 'Edit', edit_reseller_account_path(reseller_account) %></td>
+    <td><%= link_to 'Destroy', reseller_account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Reseller account', new_reseller_account_path %>

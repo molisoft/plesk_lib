@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Cname:</b>
+  <%= @customer_account.cname %>
+</p>
+
+<p>
+  <b>Pname:</b>
+  <%= @customer_account.pname %>
+</p>
+
+<p>
+  <b>Login:</b>
+  <%= @customer_account.login %>
+</p>
+
+<p>
+  <b>Passwd:</b>
+  <%= @customer_account.passwd %>
+</p>
+
+
+<%= link_to 'Edit', edit_customer_account_path(@customer_account) %> |
+<%= link_to 'Back', customer_accounts_path %>

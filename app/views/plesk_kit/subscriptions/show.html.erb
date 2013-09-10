@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @subscription.name %>
+</p>
+
+<p>
+  <b>Owner_id:</b>
+  <%= @subscription.owner_id %>
+</p>
+
+<p>
+  <b>Owner_login:</b>
+  <%= @subscription.owner_login %>
+</p>
+
+<p>
+  <b>Ip address:</b>
+  <%= @subscription.ip_address %>
+</p>
+
+<p>
+  <b>Plan_name:</b>
+  <%= @subscription.plan_name %>
+</p>
+
+<p>
+  <b>Service plan:</b>
+  <%= @subscription.service_plan_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_subscription_path(@subscription) %> |
+<%= link_to 'Back', subscriptions_path %>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Environment:</b>
+  <%= @server.environment %>
+</p>
+
+<p>
+  <b>Host:</b>
+  <%= @server.host %>
+</p>
+
+<p>
+  <b>Username:</b>
+  <%= @server.username %>
+</p>
+
+<p>
+  <b>Password:</b>
+  <%= @server.password %>
+</p>
+
+<p>
+  <b>Ghostname:</b>
+  <%= @server.ghostname %>
+</p>
+
+
+<%= link_to 'Edit', edit_server_path(@server) %> |
+<%= link_to 'Back', servers_path %>
