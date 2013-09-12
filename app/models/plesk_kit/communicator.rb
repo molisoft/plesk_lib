@@ -13,8 +13,7 @@ module PleskKit
     #  Creates object and sends it in one go
       # Code only written for Customer::Account so far
     def self.pack_and_play_with s, customer_account = nil
-      # TODO get sever properly
-      server = PleskKit::Server.first
+      server = PleskKit::Server.find_by_environment(Rails.env.to_s)
       #TODO server = PleskKit::Server.most_suitable_for_new_customer
       packet = nil
       if customer_account.blank?
@@ -22,7 +21,7 @@ module PleskKit
       else
         packet = s.pack_this shell, customer_account
       end
-      response = transportation_for packet,server #TODO here add server
+      response = transportation_for packet,server
       if (s.class.to_s == 'PleskKit::CustomerAccount' || s.class.to_s ==  'PleskKit::ResellerAccount')
         s.analyse response[0], server.id
       else

@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version       = PleskKit::VERSION
   s.authors       = ["Dionne Saunders"]
   s.email         = ["linx@castlemako.com"]
-  s.description   = "Provision Plesk 11 - WIP NOT PRODUCTION READY"
+  s.description   = "Provision Plesk 11"
   s.summary       = "Provision Plesk 11 Like a Pro!"
-  s.homepage      = ""
+  s.homepage      = "https://github.com/lenoretres/plesk_kit"
   s.license       = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*"]

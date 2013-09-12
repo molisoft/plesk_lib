@@ -1,12 +1,9 @@
 module PleskKit
   class Client
     attr_accessor :host, :user, :pass, :timeout, :rpc_version, :xml_response, :xml_target
-    def initialize(server) #TODO get these from server object?
+    def initialize(server)
       @host, @user, @pass, @timeout = server.host, server.username, server.password, 30
     end
-
-    #TODO replace with proper server selection
-
 
     def send_to_plesk(xml)
       http = Net::HTTP.new(@host, 8443)

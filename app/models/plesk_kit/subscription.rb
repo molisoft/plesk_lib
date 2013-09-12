@@ -38,7 +38,7 @@ module PleskKit
               xml.vrt_hst{
                 xml.property{
                   xml.name('ftp_login')
-                  xml.value("#{customer.login}#{rand(999)}")
+                  xml.value("#{customer.login}#{(0...4).map{  ('a'..'z').to_a[rand(26)] }.join}")
                 }
                 xml.property{
                   xml.name('ftp_password')
