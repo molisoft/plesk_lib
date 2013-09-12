@@ -5,7 +5,8 @@ class CreatePleskKitResellerAccounts < ActiveRecord::Migration
       t.string :pname
       t.string :login
       t.string :passwd
-
+      t.string :plan_name
+      t.integer :service_plan_id
       t.integer :server_id
 
       t.timestamps

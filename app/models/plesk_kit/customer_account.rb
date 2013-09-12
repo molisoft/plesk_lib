@@ -1,8 +1,14 @@
 module PleskKit
   class CustomerAccount < ActiveRecord::Base
-    attr_accessible :cname, :login, :passwd, :pname # TODO add plesk_id
+    attr_accessible :cname, :login, :passwd, :pname, :server_id # TODO add plesk_id
     has_many :subscriptions
     belongs_to :server
+    validate :uniqueness_of_login_across_accounts
+    before_create :provision_in_plesk
+
+    def provision_in_plesk
+      PleskKit::Communicator.pack_and_play_with self
+    end
 
     # # #
     # Methods for sending brand new customer account to Plesk
@@ -16,10 +22,10 @@ module PleskKit
         xml.customer {
           xml.add{
             xml.gen_info{
-              xml.cname(cname)
-              xml.pname(pname)
-              xml.login(login)
-              xml.passwd(passwd)
+              xml.cname(self.cname)
+              xml.pname(self.pname)
+              xml.login(self.login)
+              xml.passwd(self.passwd)
               #xml.status(status ? 0 : 1)
               #xml.phone(phone)
               #xml.fax(fax)
@@ -35,7 +41,7 @@ module PleskKit
       return xml.target!
     end
 
-    def analyse response_string
+    def analyse response_string, server_id
       xml = REXML::Document.new(response_string)
       status = xml.root.elements['//status'].text if xml.root.elements['//status'].present?
       if status == "error"
@@ -44,38 +50,19 @@ module PleskKit
         raise "#{code}: #{message}"
       else
         plesk_id = xml.root.elements['//id'].text if xml.root.elements['//id'].present?
+        self.server_id = server_id
       end
+
       return plesk_id # TODO save plesk_id
     end
 
-
-    # # #
-    # Methods for converting customer account to reseller account both locally and in Plesk
-    # # #
-
-    def convert_to_reseller
-      #TODO conversion
-      reseller = PleskKit::ResellerAccount.new
-      attrs = ['cname','login','passwd','pname']
-      attrs.each do |a|
-        reseller[a] = self[a]
+    private
+    def uniqueness_of_login_across_accounts
+      if PleskKit::CustomerAccount.find_by_login(self.login).present?
+        errors.add(:base, "Login is not unique across Uber Plesk accounts")
+      elsif PleskKit::ResellerAccount.find_by_login(self.login).present?
+        errors.add(:base, "Login is not unique across Uber Plesk accounts")
       end
-      reseller.save
-      cus_sub_count = self.subscriptions.count
-      self.subscriptions.each do |s|
-        s.customer_account_id = nil
-        s.reseller_account_id = reseller.id
-        s.save
-      end
-      raise 'something went wrong' if reseller.reload.subscriptions.count != cus_sub_count
-      PleskKit::Communicator.pack_and_play_with reseller, self
-      #post_conversion_destroy
-      #reseller_account
-    end
-
-    def post_conversion_destroy
-      #self.destroy
-      true
     end
 
   end

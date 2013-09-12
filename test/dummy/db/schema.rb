@@ -34,7 +34,9 @@ ActiveRecord::Schema.define(:version => 20130906040830) do
     t.string   "pname"
     t.string   "login"
     t.string   "passwd"
-    t.integer "server_id"
+    t.integer  "server_id"
+    t.integer  "service_plan_id"
+    t.string   "plan_name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

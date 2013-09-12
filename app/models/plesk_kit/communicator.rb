@@ -12,25 +12,35 @@ module PleskKit
 
     #  Creates object and sends it in one go
       # Code only written for Customer::Account so far
-    def self.pack_and_play_with s, customer_to_be_converted = nil
-      if customer_to_be_converted.blank?
-        #TODO server = PleskKit::Server.most_suitable_for_new_customer
+    def self.pack_and_play_with s, customer_account = nil
+      # TODO get sever properly
+      server = PleskKit::Server.first
+      #TODO server = PleskKit::Server.most_suitable_for_new_customer
+      packet = nil
+      if customer_account.blank?
         packet = s.pack_this shell
-        response = transportation_for packet #TODO here add server
-        #TODO associate server to the customer account?
-        s.analyse response[0] # Any specific returns, db updates, or response error handling happens here. Can also programatically detect what happened here based on the response as it verifies the command performed.
       else
-        packet = s.pack_this shell, customer_to_be_converted
-        #response = transportation_for(packet)
-        #s.analyse response[0],customer_to_be_converted
+        packet = s.pack_this shell, customer_account
+      end
+      response = transportation_for packet,server #TODO here add server
+      if (s.class.to_s == 'PleskKit::CustomerAccount' || s.class.to_s ==  'PleskKit::ResellerAccount')
+        s.analyse response[0], server.id
+      else
+        customer_account.blank? ? (s.analyse response[0]) : (s.analyse response[0],customer_account)
       end
     end
 
-    #  Sends Packet to Plesk # TODO consider how PleskKit::Server interacts here? Does the user select one, or is the one matching the environment with the fewest customers selected? Prob the latter...
-    def self.transportation_for packet
-      c = PleskKit::Client.new
+    # Sends packet to plesk
+    def self.transportation_for packet, server
+      c = PleskKit::Client.new(server)
       c.send_to_plesk packet
-      # TODO associate account to server
+    end
+
+    def self.sync_subscription sub, sub_guid
+      server = PleskKit::Server.first
+      packet = sub.sync_pack shell,sub_guid
+      response = transportation_for packet,server
+      sub.analyse response[0]
     end
   end
 end
