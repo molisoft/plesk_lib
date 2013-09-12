@@ -18,6 +18,7 @@ Or install it yourself as:
     $ gem install plesk_kit
 
 Once installed, you need to perform some migrations.
+
     $ rake plesk_kit:install:migrations
     $ rake db:migrate
 
