@@ -55,6 +55,8 @@ Some new features are slowly on the way, these include:
 * Automatic selection of the best server to provision a new customer to (currently, it will merely pick the first server matching the environment of your current Rails.env)
 * Ability to query Server statistics / performance metrics
 * Password Encryption, with the ability to shake your own salt
+* Shiny Plesk-Look Interfaces
+* More functional test/dummy app
 
 If you have a suggestion for a new feature, either submit a pull request (as per 'Contributing' section below) or post a message and I'll get to it when I can.
 
