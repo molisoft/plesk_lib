@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130906040830) do
+ActiveRecord::Schema.define(:version => 20130917020158) do
 
   create_table "plesk_kit_customer_accounts", :force => true do |t|
     t.string   "cname"
     t.string   "pname"
     t.string   "login"
     t.string   "passwd"
-    t.integer "server_id"
+    t.integer  "server_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(:version => 20130906040830) do
     t.integer  "server_id"
     t.integer  "service_plan_id"
     t.string   "plan_name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "plesk_kit_servers", :force => true do |t|
@@ -49,6 +49,16 @@ ActiveRecord::Schema.define(:version => 20130906040830) do
     t.string   "ghostname"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "plesk_kit_service_plans", :force => true do |t|
+    t.string   "name"
+    t.string   "domains"
+    t.string   "traffic"
+    t.string   "mailboxes"
+    t.string   "storage"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "plesk_kit_subscriptions", :force => true do |t|

@@ -55,8 +55,8 @@ module PleskKit
         plesk_id = xml.root.elements['//id'].text if xml.root.elements['//id'].present?
         self.server_id = server_id
       end
-
-      return plesk_id # TODO save plesk_id
+      self.save
+      return self # TODO save plesk_id
     end
 
 

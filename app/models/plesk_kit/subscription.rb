@@ -4,23 +4,32 @@ module PleskKit
 
     belongs_to :customer_account
     belongs_to :reseller_account
-    #belongs_to :service_plan
+    belongs_to :service_plan
     before_create :provision_in_plesk
 
+
+
     def provision_in_plesk
+
       account = (customer_account_id.present? ? customer_account : (reseller_account_id.present? ? reseller_account : raise(msg="no accounts?")))
-      self.plan_name = self.plan_name
-      self.ip_address = '117.55.235.27'
-      self.owner_login = account.login
-      self.name = self.name
-      if account.class.to_s == 'PleskKit::ResellerAccount'
-        self.reseller_account_id = account.id
-      elsif account.class.to_s == 'PleskKit::CustomerAccount'
-        self.customer_account_id = account.id
+      plan = PleskKit::ServicePlan.find_by_name self.plan_name
+      self.service_plan_id = plan.id
+      if plan.find_or_push(account.server) == true
+        self.plan_name = self.plan_name
+        self.ip_address = '117.55.235.27'
+        self.owner_login = account.login
+        self.name = self.name
+        if account.class.to_s == 'PleskKit::ResellerAccount'
+          self.reseller_account_id = account.id
+        elsif account.class.to_s == 'PleskKit::CustomerAccount'
+          self.customer_account_id = account.id
+        end
+        guid = PleskKit::Communicator.pack_and_play_with self, account
+        PleskKit::Communicator.sync_subscription self, guid
+        self.id
+      else
+        return false
       end
-      guid = PleskKit::Communicator.pack_and_play_with self, account
-      PleskKit::Communicator.sync_subscription self, guid
-      self.id
     end
 
     def pack_this shell, customer
@@ -38,7 +47,7 @@ module PleskKit
               xml.vrt_hst{
                 xml.property{
                   xml.name('ftp_login')
-                  xml.value("#{customer.login}#{(0...4).map{  ('a'..'z').to_a[rand(26)] }.join}")
+                  xml.value("#{customer.login}#{rand(99).to_s}")     #rand(36**8).to_s(36)
                 }
                 xml.property{
                   xml.name('ftp_password')

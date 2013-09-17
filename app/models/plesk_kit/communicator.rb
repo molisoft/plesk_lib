@@ -12,8 +12,8 @@ module PleskKit
 
     #  Creates object and sends it in one go
       # Code only written for Customer::Account so far
-    def self.pack_and_play_with s, customer_account = nil
-      server = PleskKit::Server.find_by_environment(Rails.env.to_s)
+    def self.pack_and_play_with s, customer_account = nil, create = false
+      server = PleskKit::Server.find_by_environment(Rails.env.to_s) # TODO will this provision to same server cus is on?
       #TODO server = PleskKit::Server.most_suitable_for_new_customer
       packet = nil
       if customer_account.blank?
@@ -41,5 +41,20 @@ module PleskKit
       response = transportation_for packet,server
       sub.analyse response[0]
     end
+
+    def self.get_service_plan service_plan, server
+      server = PleskKit::Server.first
+      packet = service_plan.build_xml_for_get shell
+      response = transportation_for packet, server
+      service_plan.analyse response[0], server
+    end
+
+    def self.push_service_plan service_plan, server
+      server = PleskKit::Server.first
+      packet = service_plan.build_xml_for_add shell
+      response = transportation_for packet, server
+      service_plan.analyse response[0], server
+    end
+
   end
 end

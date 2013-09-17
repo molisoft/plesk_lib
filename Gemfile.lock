@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    plesk_kit (0.0.5)
+    plesk_kit (1.0.0)
       rails (~> 3.2.13)
 
 GEM
