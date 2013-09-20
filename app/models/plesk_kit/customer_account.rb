@@ -8,6 +8,7 @@ module PleskKit
 
     def provision_in_plesk
       PleskKit::Communicator.pack_and_play_with self
+      true
     end
 
     # # #
@@ -52,7 +53,7 @@ module PleskKit
         plesk_id = xml.root.elements['//id'].text if xml.root.elements['//id'].present?
         self.server_id = server_id
       end
-      self.save
+      #self.save
       return self # TODO save plesk_id
     end
 
