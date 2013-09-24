@@ -29,9 +29,9 @@ PleskKit::Server.create(:environment => 'development', :host => '192.168.0.1', :
 ## Usage
 Service Plans:
 Create a service plan record in the database, currently you can customise a few settings (mailboxes, :domains, :name, :traffic, :storage)
-If this service plan is not found by name on the server which the gem is attempting to provision to, it will create the service plan before creating the subscription.
+If this service plan is not found by name on the server which the gem is attempting to provision to, it will create the service plan before creating the subscription. Note: use "-1" for unlimited.
 ```
-PleskKit::ServicePlan.create(:name => "My Plan", :mailboxes => "10", :storage => "", :domains => "1",  :traffic => "")
+PleskKit::ServicePlan.create(:name => "My Plan", :mailboxes => "10", :storage => "21474836480", :domains => "1",  :traffic => "-1")
 ```
 
 To create a Customer in Plesk:
