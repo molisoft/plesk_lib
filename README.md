@@ -21,14 +21,19 @@ Once installed, you need to perform some migrations.
 
 
 ## Configuration & Assumptions
-Before this little gem can communication with your plesk server, we need to learn about your server.
+Before this little gem can communicate with your plesk server, we need to learn about your server.
 ```
 PleskKit::Server.create(:environment => 'development', :host => '192.168.0.1', :username => 'admin', :password => 'yourPleskPassword', :ghostname => 'Anything you Want!')
 ```
-I am assuming that you have created some service plans via the plesk GUI or some other mechanism (sadly, this gem isn't yet capable of helping you with this).
-You will need to know the names of the service plans and/or reseller plans you would like to create.
 
 ## Usage
+Service Plans:
+Create a service plan record in the database, currently you can customise a few settings (mailboxes, :domains, :name, :traffic, :storage)
+If this service plan is not found by name on the server which the gem is attempting to provision to, it will create the service plan before creating the subscription.
+```
+PleskKit::ServicePlan.create(:name => "My Plan", :mailboxes => "10", :storage => "", :domains => "1",  :traffic => "")
+```
+
 To create a Customer in Plesk:
 ```
 customer = PleskKit::CustomerAccount.create(:pname => "FirstName LastName", :cname => "My Company", :login => "uniquelogin", :password => "s0m3P@55w0rd")
