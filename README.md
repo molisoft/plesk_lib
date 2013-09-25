@@ -3,6 +3,9 @@
 
 In development, but usable. Tested against Plesk for Linux 11.5
 
+As of release 2.0.0, PleskKit can cope with a fleet of plesk servers. It will select the server with the lowest RAM consumption which matches your current Rails.env and desired platform (i.e. windows or linux).
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -21,9 +24,9 @@ Once installed, you need to perform some migrations.
 
 
 ## Configuration & Assumptions
-Before this little gem can communicate with your plesk server, we need to learn about your server.
+Before this little gem can communicate with your plesk server, we need to learn about your server. Platform can be 'linux' or 'windows', environment can be any possible Rails.env value.
 ```
-PleskKit::Server.create(:environment => 'development', :host => '192.168.0.1', :username => 'admin', :password => 'yourPleskPassword', :ghostname => 'Anything you Want!')
+PleskKit::Server.create(:platform => 'linux', :environment => 'development', :host => '192.168.0.1', :username => 'admin', :password => 'yourPleskPassword', :ghostname => 'Anything you Want!')
 ```
 
 ## Usage
@@ -50,12 +53,10 @@ PleskKit::ResellerAccount.create(:pname => "FirstName LastName", :cname => "My C
 ```
 
 ## Current Issues:
-* Only uses the first server in the db matching your Rails.env
 * Passwords are stored in the clear at the moment
 
 ## Upcoming Features/Enhancements
 Some new features are slowly on the way, these include:
-* Automatic selection of the best server to provision a new customer to (currently, it will merely pick the first server matching the environment of your current Rails.env)
 * Ability to query Server statistics / performance metrics
 * Password Encryption, with the ability to shake your own salt
 * Shiny Plesk-Look Interfaces
