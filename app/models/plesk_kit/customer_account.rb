@@ -1,6 +1,6 @@
 module PleskKit
   class CustomerAccount < ActiveRecord::Base
-    attr_accessible :cname, :login, :passwd, :pname, :server_id # TODO add plesk_id
+    attr_accessible :cname, :login, :passwd, :pname, :server_id, :platform # TODO add plesk_id
     has_many :subscriptions
     belongs_to :server
     validate :uniqueness_of_login_across_accounts

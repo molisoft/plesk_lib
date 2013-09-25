@@ -1,6 +1,6 @@
 module PleskKit
   class ResellerAccount < ActiveRecord::Base
-    attr_accessible :cname, :login, :passwd, :pname, :plan_name, :service_plan_id, :server_id
+    attr_accessible :cname, :login, :passwd, :pname, :plan_name, :service_plan_id, :server_id, :platform
     validate :uniqueness_of_login_across_accounts
 
 
