@@ -16,7 +16,7 @@ module PleskKit
       self.service_plan_id = plan.id
       if plan.find_or_push(account.server) == true
         self.plan_name = self.plan_name
-        self.ip_address = '117.55.235.27'
+        self.ip_address = account.server.host
         self.owner_login = account.login
         self.name = self.name
         if account.class.to_s == 'PleskKit::ResellerAccount'
@@ -24,7 +24,7 @@ module PleskKit
         elsif account.class.to_s == 'PleskKit::CustomerAccount'
           self.customer_account_id = account.id
         end
-        guid = PleskKit::Communicator.pack_and_play_with self, account
+        guid = PleskKit::Communicator.pack_and_play_with_subscription self, account
         PleskKit::Communicator.sync_subscription self, guid
         self.id
       else

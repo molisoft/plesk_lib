@@ -7,7 +7,7 @@ module PleskKit
     before_create :provision_in_plesk
 
     def provision_in_plesk
-      PleskKit::Communicator.pack_and_play_with self
+      PleskKit::Communicator.pack_and_play_with_customer_or_reseller self
       true
     end
 

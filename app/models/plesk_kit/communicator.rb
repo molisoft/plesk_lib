@@ -10,29 +10,18 @@ module PleskKit
       Builder::XmlMarkup.new
     end
 
-    #  Creates object and sends it in one go
-      # Code only written for Customer::Account so far
-    def self.pack_and_play_with s, customer_account = nil, create = false
-      server = PleskKit::Server.find_by_environment(Rails.env.to_s) # TODO will this provision to same server cus is on?
-      #TODO server = PleskKit::Server.most_suitable_for_new_customer
-      packet = nil
-      if customer_account.blank?
-        packet = s.pack_this shell
-      else
-        packet = s.pack_this shell, customer_account
-      end
+    def pack_and_play_with_customer_or_reseller account
+      server = PleskKit::Server.where(:environment => Rails.env.to_s, :platform => account.platform).first
+      packet = account.pack_this shell
       response = transportation_for packet,server
-      if (s.class.to_s == 'PleskKit::CustomerAccount' || s.class.to_s ==  'PleskKit::ResellerAccount')
-        s.analyse response[0], server.id
-      else
-        customer_account.blank? ? (s.analyse response[0]) : (s.analyse response[0],customer_account)
-      end
+      account.analyse response[0], server.id
     end
 
-    # Sends packet to plesk
-    def self.transportation_for packet, server
-      c = PleskKit::Client.new(server)
-      c.send_to_plesk packet
+    def pack_and_play_with_subscription subscription, customer_account
+      server = customer_account.server
+      packet = subscription.pack_this shell, customer_account
+      response = transportation_for packet,server
+      subscription.analyse response[0],customer_account
     end
 
     def self.sync_subscription sub, sub_guid
@@ -54,6 +43,12 @@ module PleskKit
       packet = service_plan.build_xml_for_add shell
       response = transportation_for packet, server
       service_plan.analyse response[0], server
+    end
+
+    # Sends packet to plesk
+    def self.transportation_for packet, server
+      c = PleskKit::Client.new(server)
+      c.send_to_plesk packet
     end
 
   end
