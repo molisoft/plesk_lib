@@ -10,14 +10,14 @@ module PleskKit
       Builder::XmlMarkup.new
     end
 
-    def pack_and_play_with_customer_or_reseller account
+    def self.pack_and_play_with_customer_or_reseller account
       server = PleskKit::Server.where(:environment => Rails.env.to_s, :platform => account.platform).first
       packet = account.pack_this shell
       response = transportation_for packet,server
       account.analyse response[0], server.id
     end
 
-    def pack_and_play_with_subscription subscription, customer_account
+    def self.pack_and_play_with_subscription subscription, customer_account
       server = customer_account.server
       packet = subscription.pack_this shell, customer_account
       response = transportation_for packet,server
