@@ -25,7 +25,7 @@ module PleskKit
           self.customer_account_id = account.id
         end
         guid = PleskKit::Communicator.pack_and_play_with_subscription self, account
-        PleskKit::Communicator.sync_subscription self, guid
+        PleskKit::Communicator.sync_subscription self, guid, account
         self.id
       else
         return false
@@ -47,7 +47,7 @@ module PleskKit
               xml.vrt_hst{
                 xml.property{
                   xml.name('ftp_login')
-                  xml.value("#{customer.login}#{rand(99).to_s}")     #rand(36**8).to_s(36)
+                  xml.value("#{customer.login}#{rand(99).to_s}#{(0...2).map { (65 + rand(26)).chr }.join}")     #rand(36**8).to_s(36)
                 }
                 xml.property{
                   xml.name('ftp_password')

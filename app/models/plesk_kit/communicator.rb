@@ -11,7 +11,7 @@ module PleskKit
     end
 
     def self.pack_and_play_with_customer_or_reseller account
-      server = PleskKit::Server.where(:environment => Rails.env.to_s, :platform => account.platform).first
+      server = PleskKit::Server.most_suitable_for_new_customer(account.platform)
       packet = account.pack_this shell
       response = transportation_for packet,server
       account.analyse response[0], server.id
@@ -24,25 +24,30 @@ module PleskKit
       subscription.analyse response[0],customer_account
     end
 
-    def self.sync_subscription sub, sub_guid
-      server = PleskKit::Server.first
+    def self.sync_subscription sub, sub_guid, customer_account
+      server = customer_account.server
       packet = sub.sync_pack shell,sub_guid
       response = transportation_for packet,server
       sub.analyse response[0]
     end
 
     def self.get_service_plan service_plan, server
-      server = PleskKit::Server.first
       packet = service_plan.build_xml_for_get shell
       response = transportation_for packet, server
       service_plan.analyse response[0], server
     end
 
     def self.push_service_plan service_plan, server
-      server = PleskKit::Server.first
       packet = service_plan.build_xml_for_add shell
       response = transportation_for packet, server
       service_plan.analyse response[0], server
+    end
+
+    def self.get_server_stats server
+      packet = server.pack_this shell
+      response = transportation_for(packet,server)
+      server.analyse_this response[0]
+      #response[0]
     end
 
     # Sends packet to plesk

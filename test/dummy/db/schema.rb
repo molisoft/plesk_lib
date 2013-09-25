@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130917020158) do
+ActiveRecord::Schema.define(:version => 20130925230905) do
 
   create_table "plesk_kit_customer_accounts", :force => true do |t|
     t.string   "cname"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20130917020158) do
     t.integer  "server_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "platform"
   end
 
   create_table "plesk_kit_customers", :force => true do |t|
@@ -39,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20130917020158) do
     t.string   "plan_name"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "platform"
   end
 
   create_table "plesk_kit_servers", :force => true do |t|
@@ -49,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20130917020158) do
     t.string   "ghostname"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "platform"
   end
 
   create_table "plesk_kit_service_plans", :force => true do |t|
