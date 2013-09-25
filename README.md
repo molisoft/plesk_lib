@@ -24,7 +24,7 @@ Once installed, you need to perform some migrations.
 
 
 ## Configuration & Assumptions
-Before this little gem can communicate with your plesk server, we need to learn about your server. Platform can be 'linux' or 'windows', environment can be any possible Rails.env value.
+Before this little gem can communicate with your plesk server, we need to learn about your server(s). Platform can be 'linux' or 'windows', environment can be any possible Rails.env value.
 ```
 PleskKit::Server.create(:platform => 'linux', :environment => 'development', :host => '192.168.0.1', :username => 'admin', :password => 'yourPleskPassword', :ghostname => 'Anything you Want!')
 ```
