@@ -43,6 +43,12 @@ module PleskKit
       service_plan.analyse response[0], server
     end
 
+    def self.push_windows_service_plan service_plan, server
+      packet = service_plan.build_windows_xml_for_add shell
+      response = transportation_for packet, server
+      service_plan.analyse response[0], server
+    end
+
     def self.get_server_stats server
       packet = server.pack_this shell
       response = transportation_for(packet,server)
