@@ -24,11 +24,32 @@ module PleskKit
       subscription.analyse response[0],customer_account
     end
 
+    def self.pack_and_switch_subscription subscription, new_plan_guid, plesk_sub_id
+      server = subscription.customer_account.server
+      packet = subscription.switch_pack shell, new_plan_guid, plesk_sub_id
+      response = transportation_for packet,server
+      sub.analyse response[0]
+    end
+
     def self.sync_subscription sub, sub_guid, customer_account
       server = customer_account.server
       packet = sub.sync_pack shell,sub_guid
       response = transportation_for packet,server
       sub.analyse response[0]
+    end
+
+    def self.get_subscription_guid subscription
+      packet = subscription.id_pack shell, subscription.name
+      server = subscription.customer_account.server
+      response = transportation_for(packet,server)
+      subscription.analyse response[0]
+    end
+
+    def self.get_subscription_id subscription
+      packet = subscription.id_pack shell, subscription.name
+      server = subscription.customer_account.server
+      response = transportation_for(packet,server)
+      subscription.analyse_for_id response[0]
     end
 
     def self.get_service_plan service_plan, server
