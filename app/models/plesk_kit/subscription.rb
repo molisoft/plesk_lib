@@ -65,7 +65,7 @@ module PleskKit
               xml.vrt_hst{
                 xml.property{
                   xml.name('ftp_login')
-                  xml.value(xx.lower)     #rand(36**8).to_s(36)
+                  xml.value(xx.downcase)     #rand(36**8).to_s(36)
                 }
                 xml.property{
                   xml.name('ftp_password')
