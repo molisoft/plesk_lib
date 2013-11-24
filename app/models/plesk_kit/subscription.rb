@@ -50,6 +50,7 @@ module PleskKit
     def pack_this shell, customer
       digits = customer.login.to_s.split('')
       xx = ''
+      digits.each {|d|xx << (d.to_i + 65).chr}
       xml = shell
       xml.instruct!
       xml.packet(:version => '1.6.3.5') {
@@ -64,7 +65,7 @@ module PleskKit
               xml.vrt_hst{
                 xml.property{
                   xml.name('ftp_login')
-                  xml.value("#{digits.each {|d|xx << (d.to_i + 65).chr}}")     #rand(36**8).to_s(36)
+                  xml.value(xx)     #rand(36**8).to_s(36)
                 }
                 xml.property{
                   xml.name('ftp_password')
