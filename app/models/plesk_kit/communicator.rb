@@ -28,7 +28,7 @@ module PleskKit
       server = subscription.customer_account.server
       packet = subscription.switch_pack shell, new_plan_guid, plesk_sub_id
       response = transportation_for packet,server
-      sub.analyse response[0]
+      subscription.analyse response[0]
     end
 
     def self.sync_subscription sub, sub_guid, customer_account
