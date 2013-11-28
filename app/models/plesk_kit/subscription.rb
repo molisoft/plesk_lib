@@ -36,12 +36,20 @@ module PleskKit
     def switch_in_plesk
       account = (customer_account_id.present? ? customer_account : (reseller_account_id.present? ? reseller_account : raise(msg="no accounts?")))
       plan = PleskKit::ServicePlan.find_by_name self.plan_name
+      puts "|=|plan = PleskKit::ServicePlan.find_by_name self.plan_name ||| #{plan.inspect}"
+      puts plan
+      puts plan_name
+      puts '_-_-_'
       plesk_subscription_identifier = PleskKit::Communicator.get_subscription_id(self)
+      puts "plesk_subscription_identifier #{plesk_subscription_identifier}"
       if plan.find_or_push(account.server) == true
         #guid = PleskKit::Communicator.pack_and_play_with_subscription self, account
         guid = PleskKit::Communicator.get_service_plan plan, account.server
+        puts "|=| about to start the switch cmd"
         PleskKit::Communicator.pack_and_switch_subscription(self, guid, plesk_subscription_identifier)
+        puts "|=| about to start the get_subscription_guid cmd"
         sub_guid = PleskKit::Communicator.get_subscription_guid(self)
+        puts "|=| about to sync up"
         PleskKit::Communicator.sync_subscription self, sub_guid, self.customer_account
         true
       end
