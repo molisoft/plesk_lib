@@ -144,6 +144,7 @@ module PleskKit
     def analyse_for_id response_string, customer = nil
       xml = REXML::Document.new(response_string)
       status = xml.root.elements['//status'].text if xml.root.elements['//status'].present?
+      sub_guid =''
       if status == "error"
         code = xml.root.elements['//errcode'].text
         message = xml.root.elements['//errtext'].text
@@ -151,7 +152,7 @@ module PleskKit
       else
         sub_guid = xml.root.elements['//id'].text if xml.root.elements['//id'].present?
       end
-      return id || true
+      return sub_guid || true
     end
 
   end
