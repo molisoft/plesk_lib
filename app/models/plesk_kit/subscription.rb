@@ -50,10 +50,13 @@ module PleskKit
       account = (customer_account_id.present? ? customer_account : (reseller_account_id.present? ? reseller_account : raise(msg="no accounts?")))
       mbox_limit = new_plan.mailboxes
       space_limit = new_plan.storage #this value is already bytes
-
+      space_limit = 10000000000000000000000000 if space_limit == '-1'
+      mbox_limit = 10000000000000000000000000 if mbox_limit == '-1'
       plesk_subscription_identifier = PleskKit::Communicator.get_subscription_id(self)
       usage = PleskKit::Communicator.get_subscription_usage(self,plesk_subscription_identifier, account.server)
-      puts usage[0].to_i,usage[1].to_i
+      puts usage[0],usage[1]
+      usage[0] = 10000000000000000000000000 if usage[0] == '-1'
+      usage[1] = 10000000000000000000000000 if usage[1] == '-1'
       if usage[0].to_i < space_limit.to_i && usage[1].to_i < mbox_limit.to_i
         true
       else
