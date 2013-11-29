@@ -7,10 +7,24 @@ module PleskKit
     belongs_to :service_plan
     before_create :provision_in_plesk
 
+    # TODO: doing checks before downgrades
+    # box is returned in stat, it shoulds how many are consumed
+    # real_size is returned in gen_info, it should show how big the entire subscription is... hopefully
 
+    #request should look like this:
+    #<packet version="1.6.3.0">
+    #  <webspace>
+    #    <get>
+    #      <filter>
+    #        <id>subscription_id.to_i</id>
+    #      </filter>
+    #      <gen_info>
+    #      <stat/>
+    #    </get>
+    #  </webspace>
+    #</packet>
 
     def provision_in_plesk
-
       account = (customer_account_id.present? ? customer_account : (reseller_account_id.present? ? reseller_account : raise(msg="no accounts?")))
       plan = PleskKit::ServicePlan.find_by_name self.plan_name
       self.service_plan_id = plan.id
@@ -30,6 +44,37 @@ module PleskKit
       else
         return false
       end
+    end
+
+    def downgradable?(to=new_plan)
+      account = (customer_account_id.present? ? customer_account : (reseller_account_id.present? ? reseller_account : raise(msg="no accounts?")))
+      mbox_limit = new_plan.mailboxes
+      space_limit = new_plan.storage #needs to be in bytes or convert the next value to GB
+
+      plesk_subscription_identifier = PleskKit::Communicator.get_subscription_id(self)
+      usage = PleskKit::Communicator.get_subscription_usage(self,plesk_subscription_identifier, account.server)
+      if usage[0] < space_limit && usage[1] < mbox_limit
+        return true
+      else
+        return false
+      end
+    end
+
+
+    def usage_pack shell, plesk_sub_id
+      xml = shell
+      xml.instruct!
+      xml.packet(:version => '1.6.3.0') {
+        xml.webspace{
+          xml.get {
+            xml.filter{
+              xml.id(plesk_sub_id)    # TODO!!!
+            }
+            xml.gen_info
+            xml.stat
+          }
+        }
+      }
     end
 
     # update the plan name attr here before switching
@@ -164,6 +209,22 @@ module PleskKit
         sub_guid = xml.root.elements['//id'].text if xml.root.elements['//id'].present?
       end
       return sub_guid || true
+    end
+
+    def analyse_usage response_string
+      xml = REXML::Document.new(response_string)
+      status = xml.root.elements['//status'].text if xml.root.elements['//status'].present?
+      space = ''
+      mbox = ''
+      if status == "error"
+        code = xml.root.elements['//errcode'].text
+        message = xml.root.elements['//errtext'].text
+        raise "#{code}: #{message}"
+      else
+        space = xml.root.elements['//real_size'].text if xml.root.elements['//real_size'].present?
+        mbox = xml.root.elements['//box'].text if xml.root.elements['//box'].present?
+      end
+      return [space,mbox]
     end
 
   end

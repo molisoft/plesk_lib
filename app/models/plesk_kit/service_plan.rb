@@ -101,7 +101,7 @@ module PleskKit
               }
               xml.limit{
                 xml.name('max_db')
-                xml.value('10')
+                xml.value('-1')
               }
               xml.limit{
                 xml.name('max_box')

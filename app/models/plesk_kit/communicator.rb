@@ -58,6 +58,12 @@ module PleskKit
       service_plan.analyse response[0], server
     end
 
+    def self.get_subscription_usage(subscription,plesk_sub_id,server)
+      packet = subscription.usage_pack shell, plesk_sub_id
+      response = transportation_for packet, server
+      subscription.analyse_usage response[0]
+    end
+
     def self.push_service_plan service_plan, server
       packet = service_plan.build_xml_for_add shell
       response = transportation_for packet, server
