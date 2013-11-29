@@ -70,8 +70,10 @@ module PleskKit
             xml.filter{
               xml.id(plesk_sub_id)    # TODO!!!
             }
-            xml.gen_info
-            xml.stat
+            xml.dataset {
+              xml.gen_info
+              xml.stat
+            }
           }
         }
       }
