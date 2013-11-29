@@ -20,7 +20,7 @@ module PleskKit
             PleskKit::Communicator.push_windows_service_plan self, server
           end
         elsif status == 'ok'
-          return true
+          return xml.root.elements['//guid'].text
         end
 
       elsif xml.root.elements['//add'].present?
