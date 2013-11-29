@@ -46,7 +46,7 @@ module PleskKit
       end
     end
 
-    def downgradable?(to=new_plan)
+    def downgradable?(new_plan)
       account = (customer_account_id.present? ? customer_account : (reseller_account_id.present? ? reseller_account : raise(msg="no accounts?")))
       mbox_limit = new_plan.mailboxes
       space_limit = new_plan.storage #needs to be in bytes or convert the next value to GB
