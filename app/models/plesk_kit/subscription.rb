@@ -49,14 +49,15 @@ module PleskKit
     def downgradable?(new_plan)
       account = (customer_account_id.present? ? customer_account : (reseller_account_id.present? ? reseller_account : raise(msg="no accounts?")))
       mbox_limit = new_plan.mailboxes
-      space_limit = new_plan.storage #needs to be in bytes or convert the next value to GB
+      space_limit = new_plan.storage #this value is already bytes
 
       plesk_subscription_identifier = PleskKit::Communicator.get_subscription_id(self)
       usage = PleskKit::Communicator.get_subscription_usage(self,plesk_subscription_identifier, account.server)
-      if usage[0] < space_limit && usage[1] < mbox_limit
-        return true
+      puts usage[0].to_i,usage[1].to_i
+      if usage[0].to_i < space_limit.to_i && usage[1].to_i < mbox_limit.to_i
+        true
       else
-        return false
+        false
       end
     end
 
