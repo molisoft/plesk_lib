@@ -45,6 +45,7 @@ module PleskKit
       if plan.find_or_push(account.server) == true
         #guid = PleskKit::Communicator.pack_and_play_with_subscription self, account
         guid = PleskKit::Communicator.get_service_plan plan, account.server
+        puts "|=| THE GUID IS #{guid}"
         puts "|=| about to start the switch cmd"
         PleskKit::Communicator.pack_and_switch_subscription(self, guid, plesk_subscription_identifier)
         puts "|=| about to start the get_subscription_guid cmd"
