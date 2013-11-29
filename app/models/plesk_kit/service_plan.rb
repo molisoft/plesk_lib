@@ -29,7 +29,7 @@ module PleskKit
           message = xml.root.elements['//errtext'].text
           raise "#{code}: #{message}"
         elsif status == 'ok'
-          return true
+          return xml.root.elements['//guid'].text
        end
       end
     end

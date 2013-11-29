@@ -14,7 +14,7 @@ module PleskKit
       account = (customer_account_id.present? ? customer_account : (reseller_account_id.present? ? reseller_account : raise(msg="no accounts?")))
       plan = PleskKit::ServicePlan.find_by_name self.plan_name
       self.service_plan_id = plan.id
-      if plan.find_or_push(account.server) == true
+      if plan.find_or_push(account.server).present?
         self.plan_name = self.plan_name
         self.ip_address = account.server.host
         self.owner_login = account.login
@@ -42,7 +42,7 @@ module PleskKit
       puts '_-_-_'
       plesk_subscription_identifier = PleskKit::Communicator.get_subscription_id(self)
       puts "plesk_subscription_identifier #{plesk_subscription_identifier}"
-      if plan.find_or_push(account.server) == true
+      if plan.find_or_push(account.server).present?
         #guid = PleskKit::Communicator.pack_and_play_with_subscription self, account
         guid = PleskKit::Communicator.get_service_plan plan, account.server
         puts "|=| THE GUID IS #{guid}"
@@ -53,6 +53,8 @@ module PleskKit
         puts "|=| about to sync up"
         PleskKit::Communicator.sync_subscription self, sub_guid, self.customer_account
         true
+      else
+        puts "could not find or push?"
       end
     end
 
