@@ -17,6 +17,13 @@ module PleskKit
       account.analyse response[0], server.id
     end
 
+    def self.pack_and_reset_password account, new_password
+      server = account.server
+      packet = account.password_reset_pack shell, new_password
+      response = transportation_for packet, server
+      account.analyse_password_reset response[0]
+    end
+
     def self.pack_and_play_with_subscription subscription, customer_account
       server = customer_account.server
       packet = subscription.pack_this shell, customer_account

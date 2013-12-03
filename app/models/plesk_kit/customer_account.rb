@@ -11,6 +11,11 @@ module PleskKit
       true
     end
 
+    def reset_password(new_password)
+      PleskKit::Communicator.pack_and_reset_password self, new_password
+      true
+    end
+
     # # #
     # Methods for sending brand new customer account to Plesk
     # # #
@@ -42,6 +47,25 @@ module PleskKit
       return xml.target!
     end
 
+    def password_reset_pack shell, new_password
+      xml = shell
+      xml.instruct!
+      xml.packet(:version => '1.6.3.5') {
+        xml.customer {
+          xml.set{
+            xml.filter{
+
+            }
+            xml.values{
+              xml.gen_info{
+                xml.passwd(new_password)
+              }
+            }
+          }
+        }
+      }
+    end
+
     def analyse response_string, server_id
       xml = REXML::Document.new(response_string)
       status = xml.root.elements['//status'].text if xml.root.elements['//status'].present?
@@ -55,6 +79,18 @@ module PleskKit
       end
       #self.save
       return self # TODO save plesk_id
+    end
+
+    def analyse_password_reset response_string
+      xml = REXML::Document.new(response_string)
+      status = xml.root.elements['//status'].text if xml.root.elements['//status'].present?
+      if status == "error"
+        code = xml.root.elements['//errcode'].text
+        message = xml.root.elements['//errtext'].text
+        raise "#{code}: #{message}"
+      else
+        true
+      end
     end
 
     private
