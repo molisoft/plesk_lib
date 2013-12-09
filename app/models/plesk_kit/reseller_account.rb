@@ -23,7 +23,7 @@ module PleskKit
       xml.packet(:version => '1.6.3.5') {
         xml.reseller {
           xml.add{
-            xml.send(:'gen-info') {
+            xml.tag!('gen-info') {
               xml.cname(self.cname)
               xml.pname(self.pname)
               xml.login(self.login)

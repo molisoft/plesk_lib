@@ -149,7 +149,7 @@ module PleskKit
       xml.instruct!
       xml.packet(:version => '1.6.3.5') {
         xml.webspace{
-          xml.send(:"switch-subscription") {
+          xml.tag!("switch-subscription") {
             xml.filter{
               xml.id(plesk_sub_id)    # TODO!!!
             }
@@ -181,7 +181,7 @@ module PleskKit
       xml.instruct!
       xml.packet(:version => '1.6.3.5') {
         xml.webspace{
-          xml.send(:"sync-subscription") {
+          xml.tag!("sync-subscription") {
             xml.filter{
               xml.guid(sub_guid)
             }
