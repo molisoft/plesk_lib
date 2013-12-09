@@ -139,7 +139,7 @@ module PleskKit
             }
             xml.tag!("log-rotation"){
             xml.on{
-                xml.send(:"log-condition"){
+                xml.tag!("log-condition"){
                   xml.tag!("log-bysize", "10485760")
                 }
                 xml.tag!("log-max-num-files", "10")
@@ -450,7 +450,7 @@ module PleskKit
             }
             xml.tag!("log-rotation"){
               xml.on{
-                xml.send(:"log-condition"){
+                xml.tag!("log-condition"){
                   xml.tag!("log-bysize", "10485760")
                 }
                 xml.tag!("log-max-num-files", "10")
