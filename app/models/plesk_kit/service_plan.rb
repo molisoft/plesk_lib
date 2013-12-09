@@ -412,7 +412,11 @@ module PleskKit
               }
               xml.limit{
                 xml.name('max_db')
-                xml.value('10')
+                xml.value('-1')
+              }
+              xml.limit{
+                xml.name('max_mssql_db')
+                xml.value('-1')
               }
               xml.limit{
                 xml.name('max_box')
@@ -425,6 +429,10 @@ module PleskKit
               xml.limit{
                 xml.name('max_maillists')
                 xml.value('100')
+              }
+              xml.limit{
+                xml.name('total_mboxes_quota')
+                xml.value('-1')
               }
               xml.limit{
                 xml.name('max_webapps')
