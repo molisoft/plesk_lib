@@ -54,7 +54,7 @@ module PleskKit
       xml = shell
       xml.instruct!
       xml.packet(:version => '1.6.3.0') {
-        xml.send(:"service-plan") {
+        xml.tag!("service-plan")  {
           xml.add{
             xml.name("#{self.name.to_s}")
             xml.mail{
@@ -137,8 +137,8 @@ module PleskKit
               }
 
             }
-            xml.send(:"log-rotation"){
-              xml.on{
+            xml.tag!("log-rotation"){
+            xml.on{
                 xml.send(:"log-condition"){
                   xml.tag!("log-bysize", "10485760")
                 }
@@ -365,7 +365,7 @@ module PleskKit
       xml = shell
       xml.instruct!
       xml.packet(:version => '1.6.3.0') {
-        xml.send(:"service-plan") {
+        xml.tag!("service-plan")  {
           xml.add{
             xml.name("#{self.name.to_s}")
             xml.mail{
@@ -448,7 +448,7 @@ module PleskKit
               }
 
             }
-            xml.send(:"log-rotation"){
+            xml.tag!("log-rotation"){
               xml.on{
                 xml.send(:"log-condition"){
                   xml.tag!("log-bysize", "10485760")
