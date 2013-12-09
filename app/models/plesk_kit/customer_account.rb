@@ -33,13 +33,14 @@ module PleskKit
               xml.login(self.login)
               xml.passwd(self.passwd)
               #xml.status(status ? 0 : 1)
-              #xml.phone(phone)
+              xml.phone('0000000000')
               #xml.fax(fax)
               #xml.address(address)
               #xml.city(city)
               #xml.state(state)
               #xml.pcode(pcode)
-              #xml.country(country)
+              xml.email('noreply@ausupport.com.au')
+              xml.country("AU")
             }
           }
         }
