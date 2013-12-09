@@ -412,7 +412,7 @@ module PleskKit
               }
               xml.limit{
                 xml.name('max_db')
-                xml.value('-1')
+                xml.value('0')
               }
               xml.limit{
                 xml.name('max_mssql_db')
