@@ -30,7 +30,7 @@ module PleskKit
       self.service_plan_id = plan.id
       if plan.find_or_push(account.server).present?
         self.plan_name = self.plan_name
-        self.ip_address = account.server.host
+        self.ip_address = account.server.ip_address
         self.owner_login = account.login
         self.name = self.name
         if account.class.to_s == 'PleskKit::ResellerAccount'

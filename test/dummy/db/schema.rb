@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20130925230905) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "platform"
+    t.string   "ip_address"
   end
 
   create_table "plesk_kit_service_plans", :force => true do |t|
