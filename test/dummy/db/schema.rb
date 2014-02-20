@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(:version => 20130925230905) do
   create_table "plesk_kit_customer_accounts", :force => true do |t|
     t.string   "cname"
     t.string   "pname"
-    t.string   "login"
+    t.string   "login"                            #
     t.string   "passwd"
     t.integer  "server_id"
     t.datetime "created_at", :null => false

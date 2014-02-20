@@ -48,14 +48,14 @@ module PleskKit
       return xml.target!
     end
 
-    def password_reset_pack shell, new_password
+    def password_reset_pack shell, new_password, account
       xml = shell
       xml.instruct!
       xml.packet(:version => '1.6.3.5') {
         xml.customer {
           xml.set{
             xml.filter{
-
+              xml.login(account.login)
             }
             xml.values{
               xml.gen_info{

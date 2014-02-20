@@ -19,7 +19,7 @@ module PleskKit
 
     def self.pack_and_reset_password account, new_password
       server = account.server
-      packet = account.password_reset_pack shell, new_password
+      packet = account.password_reset_pack shell, new_password, account
       response = transportation_for packet, server
       account.analyse_password_reset response[0]
     end
