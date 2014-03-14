@@ -1,12 +1,12 @@
 module PleskLib
-  class Server < ActiveRecord::Base
-    attr_accessible :environment, :ghostname, :host, :password, :username, :platform
+  class Server
+    attr_accessor :host, :password, :username
 
-    has_many :customer_accounts
-    has_many :reseller_accounts
-
-    validates :environment, :host, :username, :password, :presence => {:message => 'Cannot be blank! Requires, at minimum, environment (dev,staging,production), host without a port, username, and password'}
-
+    def initialize(host, username, password)
+      @host = host
+      @username = username
+      @password = password
+    end
 
     def self.most_suitable_for_new_customer(platform)
       server_list = PleskLib::Server.where(:environment => Rails.env.to_s, :platform => platform)
@@ -14,11 +14,6 @@ module PleskLib
       server_list.each { |s| servers << PleskLib::Communicator.get_server_stats(server=s) }
       servers = servers.sort_by { |hsh| hsh[:ram] }.reverse
       PleskLib::Server.find servers.first[:id]
-    end
-
-    def starved_of_resources?
-      # TODO Check CPU, Diskspace, RAM. Return false if all met satisfactorily.
-      false
     end
 
     def pack_this shell
