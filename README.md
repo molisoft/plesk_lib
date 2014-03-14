@@ -23,13 +23,16 @@ Once installed, you need to perform some migrations.
     $ rake db:migrate
 
 
-## Configuration & Assumptions
-Before this little gem can communicate with your plesk server, we need to learn about your server(s). Platform can be 'linux' or 'windows', environment can be any possible Rails.env value.
+## Usage
+
 ```
-PleskKit::Server.create(:platform => 'linux', :environment => 'development', :host => '192.168.0.1', :username => 'admin', :password => 'yourPleskPassword', :ghostname => 'Anything you Want!')
+server = PleskLib::Server.new('192.168.0.1', 'admin', 'yourPleskPassword')
+customer_account = PleskLib::CustomerAccount.new('user92', {password: 'foobar', person_name: 'foo'})
+server.create_customer_account customer_account
 ```
 
-## Usage
+
+
 Service Plans:
 Create a service plan record in the database, currently you can customise a few settings (mailboxes, :domains, :name, :traffic, :storage)
 If this service plan is not found by name on the server which the gem is attempting to provision to, it will create the service plan before creating the subscription. Note: use "-1" for unlimited.
