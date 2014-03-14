@@ -17,12 +17,6 @@ And then execute:
     $ bundle
 
 
-Once installed, you need to perform some migrations.
-
-    $ rake plesk_kit:install:migrations
-    $ rake db:migrate
-
-
 ## Usage
 
 ```
