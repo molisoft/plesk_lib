@@ -1,11 +1,12 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'test/gem/version'
+require 'plesk_lib'
+require 'plesk_lib/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "plesk_lib"
-  spec.version       = Test::Gem::VERSION
+  spec.version       = PleskLib::VERSION
   spec.authors       = ["Phillipp Röll"]
   spec.email         = ["phillipp.roell@trafficplex.de"]
   spec.summary       = %q{Plesk 11 provisioning library. Extracted out of plesk_kit}
