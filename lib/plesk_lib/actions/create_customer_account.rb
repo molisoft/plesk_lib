@@ -1,6 +1,6 @@
-require 'plesk_lib'
 require 'plesk_lib/actions/base'
 require 'builder'
+require 'rexml/document'
 
 class PleskLib::Actions::CreateCustomerAccount < PleskLib::Actions::Base
   attr_reader :customer, :plesk_id
@@ -17,8 +17,8 @@ class PleskLib::Actions::CreateCustomerAccount < PleskLib::Actions::Base
       xml.customer {
         xml.add{
           xml.gen_info{
-            xml.cname(customer.company_name) if customer.company_name.present?
-            xml.pname(customer.person_name) if customer.person_name.present?
+            xml.cname(customer.company_name)
+            xml.pname(customer.person_name)
             xml.login(customer.login) if customer.login.present?
             xml.passwd(customer.password) if customer.password.present?
             xml.status(customer.status) if customer.status.present?

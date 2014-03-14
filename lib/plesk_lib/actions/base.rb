@@ -1,4 +1,5 @@
-require 'plesk_lib'
+require 'net/http'
+require 'openssl'
 
 module PleskLib::Actions
   class Base

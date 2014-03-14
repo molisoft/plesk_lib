@@ -8,6 +8,11 @@ module PleskLib
       @password = password
     end
 
+    def create_customer_account(customer_account)
+      action = PleskLib::Actions::CreateCustomerAccount.new(customer_account)
+      action.execute_on(self)
+    end
+
     def self.most_suitable_for_new_customer(platform)
       server_list = PleskLib::Server.where(:environment => Rails.env.to_s, :platform => platform)
       servers = []
