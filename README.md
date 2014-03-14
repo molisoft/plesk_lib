@@ -1,4 +1,4 @@
-# PleskKit [![Gem Version](https://badge.fury.io/rb/plesk_kit.png)](http://badge.fury.io/rb/plesk_kit)
+# PleskLib [![Gem Version](https://badge.fury.io/rb/plesk_lib.png)](http://badge.fury.io/rb/plesk_lib)
 
 
 In development, but usable. Tested against Plesk for Linux 11.5

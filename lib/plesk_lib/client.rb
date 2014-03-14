@@ -1,4 +1,4 @@
-module PleskKit
+module PleskLib
   class Client
     attr_accessor :host, :user, :pass, :timeout, :rpc_version, :xml_response, :xml_target
     def initialize(server)

@@ -1,4 +1,4 @@
-module PleskKit
+module PleskLib
   class ResellerAccount < ActiveRecord::Base
     attr_accessible :cname, :login, :passwd, :pname, :plan_name, :service_plan_id, :server_id, :platform
     validate :uniqueness_of_login_across_accounts
@@ -9,7 +9,7 @@ module PleskKit
     before_create :provision_in_plesk
 
     def provision_in_plesk
-      PleskKit::Communicator.pack_and_play_with_customer_or_reseller self
+      PleskLib::Communicator.pack_and_play_with_customer_or_reseller self
     end
 
     # # #
@@ -63,9 +63,9 @@ module PleskKit
 
     private
     def uniqueness_of_login_across_accounts
-      if PleskKit::CustomerAccount.find_by_login(self.login).present?
+      if PleskLib::CustomerAccount.find_by_login(self.login).present?
         errors.add(:base, "Login is not unique across Uber Plesk accounts")
-      elsif PleskKit::ResellerAccount.find_by_login(self.login).present?
+      elsif PleskLib::ResellerAccount.find_by_login(self.login).present?
         errors.add(:base, "Login is not unique across Uber Plesk accounts")
       end
     end

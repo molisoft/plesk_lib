@@ -1,11 +1,11 @@
-module PleskKit
+module PleskLib
   class ServicePlan < ActiveRecord::Base
     attr_accessible :mailboxes, :domains, :name, :traffic, :storage
     validates_presence_of :mailboxes, :domains, :name, :traffic, :storage
     has_many :subscriptions
 
     def find_or_push server
-      PleskKit::Communicator.get_service_plan self, server
+      PleskLib::Communicator.get_service_plan self, server
     end
 
     def analyse response_string, server
@@ -15,9 +15,9 @@ module PleskKit
       if xml.root.elements['//get'].present?
         if status == 'error'
           if server.platform == 'linux'
-            PleskKit::Communicator.push_service_plan self, server
+            PleskLib::Communicator.push_service_plan self, server
           elsif server.platform == 'windows'
-            PleskKit::Communicator.push_windows_service_plan self, server
+            PleskLib::Communicator.push_windows_service_plan self, server
           end
         elsif status == 'ok'
           return xml.root.elements['//guid'].text

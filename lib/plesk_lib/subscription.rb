@@ -1,4 +1,4 @@
-module PleskKit
+module PleskLib
   class Subscription < ActiveRecord::Base
     attr_accessible :ip_address, :name, :owner_id, :owner_login, :plan_name, :service_plan_id, :customer_account_id, :reseller_account_id
 
@@ -26,20 +26,20 @@ module PleskKit
 
     def provision_in_plesk
       account = (customer_account_id.present? ? customer_account : (reseller_account_id.present? ? reseller_account : raise(msg="no accounts?")))
-      plan = PleskKit::ServicePlan.find_by_name self.plan_name
+      plan = PleskLib::ServicePlan.find_by_name self.plan_name
       self.service_plan_id = plan.id
       if plan.find_or_push(account.server).present?
         self.plan_name = self.plan_name
         self.ip_address = account.server.ip_address
         self.owner_login = account.login
         self.name = self.name
-        if account.class.to_s == 'PleskKit::ResellerAccount'
+        if account.class.to_s == 'PleskLib::ResellerAccount'
           self.reseller_account_id = account.id
-        elsif account.class.to_s == 'PleskKit::CustomerAccount'
+        elsif account.class.to_s == 'PleskLib::CustomerAccount'
           self.customer_account_id = account.id
         end
-        guid = PleskKit::Communicator.pack_and_play_with_subscription self, account
-        PleskKit::Communicator.sync_subscription self, guid, account
+        guid = PleskLib::Communicator.pack_and_play_with_subscription self, account
+        PleskLib::Communicator.sync_subscription self, guid, account
         self.id
       else
         return false
@@ -52,8 +52,8 @@ module PleskKit
       space_limit = new_plan.storage #this value is already bytes
       space_limit = 10000000000000000000000000 if space_limit == '-1'
       mbox_limit = 10000000000000000000000000 if mbox_limit == '-1'
-      plesk_subscription_identifier = PleskKit::Communicator.get_subscription_id(self)
-      usage = PleskKit::Communicator.get_subscription_usage(self,plesk_subscription_identifier, account.server)
+      plesk_subscription_identifier = PleskLib::Communicator.get_subscription_id(self)
+      usage = PleskLib::Communicator.get_subscription_usage(self,plesk_subscription_identifier, account.server)
       puts usage[0],usage[1]
       usage[0] = 10000000000000000000000000 if usage[0] == '-1'
       usage[1] = 10000000000000000000000000 if usage[1] == '-1'
@@ -86,23 +86,23 @@ module PleskKit
     # update the plan name attr here before switching
     def switch_in_plesk
       account = (customer_account_id.present? ? customer_account : (reseller_account_id.present? ? reseller_account : raise(msg="no accounts?")))
-      plan = PleskKit::ServicePlan.find_by_name self.plan_name
-      puts "|=|plan = PleskKit::ServicePlan.find_by_name self.plan_name ||| #{plan.inspect}"
+      plan = PleskLib::ServicePlan.find_by_name self.plan_name
+      puts "|=|plan = PleskLib::ServicePlan.find_by_name self.plan_name ||| #{plan.inspect}"
       puts plan
       puts plan_name
       puts '_-_-_'
-      plesk_subscription_identifier = PleskKit::Communicator.get_subscription_id(self)
+      plesk_subscription_identifier = PleskLib::Communicator.get_subscription_id(self)
       puts "plesk_subscription_identifier #{plesk_subscription_identifier}"
       if plan.find_or_push(account.server).present?
-        #guid = PleskKit::Communicator.pack_and_play_with_subscription self, account
-        guid = PleskKit::Communicator.get_service_plan plan, account.server
+        #guid = PleskLib::Communicator.pack_and_play_with_subscription self, account
+        guid = PleskLib::Communicator.get_service_plan plan, account.server
         puts "|=| THE GUID IS #{guid}"
         puts "|=| about to start the switch cmd"
-        PleskKit::Communicator.pack_and_switch_subscription(self, guid, plesk_subscription_identifier)
+        PleskLib::Communicator.pack_and_switch_subscription(self, guid, plesk_subscription_identifier)
         puts "|=| about to start the get_subscription_guid cmd"
-        sub_guid = PleskKit::Communicator.get_subscription_guid(self)
+        sub_guid = PleskLib::Communicator.get_subscription_guid(self)
         puts "|=| about to sync up"
-        PleskKit::Communicator.sync_subscription self, sub_guid, self.customer_account
+        PleskLib::Communicator.sync_subscription self, sub_guid, self.customer_account
         true
       else
         puts "could not find or push?"

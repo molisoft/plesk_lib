@@ -1,4 +1,4 @@
-module PleskKit
+module PleskLib
   class Communicator
 
     require 'net/http'
@@ -11,7 +11,7 @@ module PleskKit
     end
 
     def self.pack_and_play_with_customer_or_reseller account
-      server = PleskKit::Server.most_suitable_for_new_customer(account.platform)
+      server = PleskLib::Server.most_suitable_for_new_customer(account.platform)
       packet = account.pack_this shell
       response = transportation_for packet,server
       account.analyse response[0], server.id
@@ -92,7 +92,7 @@ module PleskKit
 
     # Sends packet to plesk
     def self.transportation_for packet, server
-      c = PleskKit::Client.new(server)
+      c = PleskLib::Client.new(server)
       c.send_to_plesk packet
     end
 

@@ -1,4 +1,4 @@
-module PleskKit
+module PleskLib
   class Server < ActiveRecord::Base
     attr_accessible :environment, :ghostname, :host, :password, :username, :platform
 
@@ -9,11 +9,11 @@ module PleskKit
 
 
     def self.most_suitable_for_new_customer(platform)
-      server_list = PleskKit::Server.where(:environment => Rails.env.to_s, :platform => platform)
+      server_list = PleskLib::Server.where(:environment => Rails.env.to_s, :platform => platform)
       servers = []
-      server_list.each { |s| servers << PleskKit::Communicator.get_server_stats(server=s) }
+      server_list.each { |s| servers << PleskLib::Communicator.get_server_stats(server=s) }
       servers = servers.sort_by { |hsh| hsh[:ram] }.reverse
-      PleskKit::Server.find servers.first[:id]
+      PleskLib::Server.find servers.first[:id]
     end
 
     def starved_of_resources?

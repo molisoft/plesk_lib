@@ -1,4 +1,4 @@
-module PleskKit
+module PleskLib
   class CustomerAccount < ActiveRecord::Base
     attr_accessible :cname, :login, :passwd, :pname, :server_id, :platform # TODO add plesk_id
     has_many :subscriptions
@@ -7,12 +7,12 @@ module PleskKit
     before_create :provision_in_plesk
 
     def provision_in_plesk
-      PleskKit::Communicator.pack_and_play_with_customer_or_reseller self
+      PleskLib::Communicator.pack_and_play_with_customer_or_reseller self
       true
     end
 
     def reset_password(new_password)
-      PleskKit::Communicator.pack_and_reset_password self, new_password
+      PleskLib::Communicator.pack_and_reset_password self, new_password
       true
     end
 
@@ -96,9 +96,9 @@ module PleskKit
 
     private
     def uniqueness_of_login_across_accounts
-      if PleskKit::CustomerAccount.find_by_login(self.login).present?
+      if PleskLib::CustomerAccount.find_by_login(self.login).present?
         errors.add(:base, "Login is not unique across Uber Plesk accounts")
-      elsif PleskKit::ResellerAccount.find_by_login(self.login).present?
+      elsif PleskLib::ResellerAccount.find_by_login(self.login).present?
         errors.add(:base, "Login is not unique across Uber Plesk accounts")
       end
     end
