@@ -1,8 +1,8 @@
-require 'plesk_lib/customer_account'
+require 'plesk_lib/customer'
 
-describe PleskLib::CustomerAccount do
+describe PleskLib::Customer do
   context 'with login and password given to intializer' do
-    subject { PleskLib::CustomerAccount.new('the_login', { password: 'the_password' }) }
+    subject { PleskLib::Customer.new('the_login', { password: 'the_password' }) }
 
     it { should respond_to(:company_name) }
     it { should respond_to(:person_name) }
@@ -14,7 +14,7 @@ describe PleskLib::CustomerAccount do
 
     it 'should be initializable with only the login' do
       expect {
-        PleskLib::CustomerAccount.new('the_login')
+        PleskLib::Customer.new('the_login')
       }.not_to raise_error
     end
   end

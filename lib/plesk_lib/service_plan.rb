@@ -1,5 +1,5 @@
 module PleskLib
-  class ServicePlan < ActiveRecord::Base
+  class ServicePlan
     attr_accessible :mailboxes, :domains, :name, :traffic, :storage
     validates_presence_of :mailboxes, :domains, :name, :traffic, :storage
     has_many :subscriptions

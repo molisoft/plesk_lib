@@ -2,11 +2,11 @@ require 'plesk_lib/actions/base'
 require 'builder'
 require 'rexml/document'
 
-class PleskLib::Actions::ChangeCustomerAccountPassword < PleskLib::Actions::Base
-  attr_reader :customer_account, :new_password
+class PleskLib::Actions::ChangeCustomerPassword < PleskLib::Actions::Base
+  attr_reader :customer, :new_password
 
-  def initialize(customer_account, new_password)
-    @customer_account = customer_account
+  def initialize(customer, new_password)
+    @customer = customer
     @new_password = new_password
   end
 
@@ -17,7 +17,7 @@ class PleskLib::Actions::ChangeCustomerAccountPassword < PleskLib::Actions::Base
       xml.customer {
         xml.set{
           xml.filter{
-            xml.login(@customer_account.login)
+            xml.login(@customer.login)
           }
           xml.values{
             xml.gen_info{

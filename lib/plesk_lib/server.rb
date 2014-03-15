@@ -8,13 +8,13 @@ module PleskLib
       @password = password
     end
 
-    def create_customer_account(customer_account)
-      action = PleskLib::Actions::CreateCustomerAccount.new(customer_account)
+    def create_customer(customer)
+      action = PleskLib::Actions::CreateCustomer.new(customer)
       action.execute_on(self)
     end
 
-    def change_customer_account_password(customer_account, new_password)
-      action = PleskLib::Actions::ChangeCustomerAccountPassword.new(customer_account, new_password)
+    def change_customer_password(customer, new_password)
+      action = PleskLib::Actions::ChangeCustomerPassword.new(customer, new_password)
       action.execute_on(self)
     end
 

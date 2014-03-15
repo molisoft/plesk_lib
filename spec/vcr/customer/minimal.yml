@@ -1,0 +1,112 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://10.0.0.158:8443/enterprise/control/agent.php
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><packet version="1.6.3.5"><server><get><stat/></get></server></packet>
+    headers:
+      http_auth_login:
+      - admin
+      http_auth_passwd:
+      - ccsnDxnWy2j0
+      content-type:
+      - text/xml
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - sw-cp-server
+      date:
+      - Wed, 12 Mar 2014 20:52:14 GMT
+      content-type:
+      - text/xml
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      p3p:
+      - CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"
+      last-modified:
+      - Wed, 12 Mar 2014 20:52:13 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      pragma:
+      - no-cache
+      set-cookie:
+      - PHPSESSID=ce89c5d0d39f093105794b13eb7e1671; path=/; secure; httponly
+      - locale=en-US; expires=Thu, 12-Mar-2015 20:52:14 GMT; path=/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <packet version="1.6.3.5"><server><get><result><status>ok</status><stat><objects><clients>2</clients><domains>6</domains><active_domains>6</active_domains><mail_boxes>1</mail_boxes><mail_redirects>0</mail_redirects><mail_groups>0</mail_groups><mail_responders>0</mail_responders><web_users>0</web_users><databases>4</databases><database_users>3</database_users><problem_clients>0</problem_clients><problem_domains>0</problem_domains></objects><version><plesk_name>psa</plesk_name><plesk_version>11.5.30</plesk_version><plesk_os>Ubuntu</plesk_os><plesk_os_version>12.04</plesk_os_version><plesk_build>115130819.13</plesk_build><os_release>3.5.0-23-generic</os_release></version><other><cpu>GenuineIntel, Intel(R)Core(TM) i7-2600 CPU @ 3.40GHz</cpu><uptime>180120</uptime><inside_vz>false</inside_vz></other><load_avg><l1>6</l1><l5>4</l5><l15>5</l15></load_avg><mem><total>2096848896</total><used>1669128192</used><free>427720704</free><shared>0</shared><buffer>192671744</buffer><cached>827215872</cached></mem><swap><total>2144333824</total><used>15638528</used><free>2128695296</free></swap><diskspace><device><name>/dev/sda1</name><total>19024048128</total><used>3854483456</used><free>14203199488</free></device></diskspace></stat></result></get></server></packet>
+    http_version: '1.1'
+  recorded_at: Sat, 15 Mar 2014 14:59:04 GMT
+- request:
+    method: post
+    uri: https://10.0.0.158:8443/enterprise/control/agent.php
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><packet version="1.6.3.5"><customer><add><gen_info><cname>My
+        Company</cname><pname>FirstName LastName</pname><login>cust91</login><passwd>customer_secret</passwd><phone>0000000000</phone><email>noreply@ausupport.com.au</email><country>AU</country></gen_info></add></customer></packet>
+    headers:
+      http_auth_login:
+      - admin
+      http_auth_passwd:
+      - ccsnDxnWy2j0
+      content-type:
+      - text/xml
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - "*/*"
+      user-agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - sw-cp-server
+      date:
+      - Wed, 12 Mar 2014 20:52:14 GMT
+      content-type:
+      - text/xml
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      p3p:
+      - CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"
+      last-modified:
+      - Wed, 12 Mar 2014 20:52:14 GMT
+      expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      cache-control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      pragma:
+      - no-cache
+      set-cookie:
+      - PHPSESSID=64f1673e5c96ac761a763d512a15d836; path=/; secure; httponly
+      - locale=en-US; expires=Thu, 12-Mar-2015 20:52:14 GMT; path=/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <packet version="1.6.3.5"><customer><add><result><status>ok</status><id>17</id><guid>cae5b4b7-579d-4a7c-8323-d1e96b47db96</guid></result></add></customer></packet>
+    http_version: '1.1'
+  recorded_at: Sat, 15 Mar 2014 14:59:04 GMT
+recorded_with: VCR 2.8.0

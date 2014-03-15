@@ -2,7 +2,7 @@ require 'plesk_lib/actions/base'
 require 'builder'
 require 'rexml/document'
 
-class PleskLib::Actions::CreateCustomerAccount < PleskLib::Actions::Base
+class PleskLib::Actions::CreateCustomer < PleskLib::Actions::Base
   attr_reader :customer, :plesk_id
 
   def initialize(customer)
