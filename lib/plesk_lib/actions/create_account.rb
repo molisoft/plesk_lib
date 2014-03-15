@@ -3,8 +3,8 @@ require 'builder'
 require 'rexml/document'
 
 class PleskLib::Actions::CreateAccount < PleskLib::Actions::Base
-  def build_gen_info(xml, account)
-    xml.gen_info{
+  def build_gen_info(xml, account, tag_name = 'gen_info')
+    xml.tag!(tag_name) {
       xml.cname(account.company_name)
       xml.pname(account.person_name)
       xml.login(account.login) if account.login.present?

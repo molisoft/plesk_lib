@@ -20,6 +20,11 @@ module PleskLib::Actions
       code = xml_document.root.elements['//errcode'].text.to_i
       message = xml_document.root.elements['//errtext'].text
 
+      # this catches the duplicate account error for resellers
+      if code == 1019 and message.include?('already exists')
+        raise PleskLib::LoginAlreadyTaken, message
+      end
+
       case code
       when 1007 then
         raise PleskLib::LoginAlreadyTaken, message
