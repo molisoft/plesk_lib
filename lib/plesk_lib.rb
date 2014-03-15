@@ -1,6 +1,7 @@
 require 'active_support/core_ext/object/blank'
 require 'plesk_lib/version'
 # require 'plesk_lib/communicator'
+require 'plesk_lib/account'
 require 'plesk_lib/customer'
 require 'plesk_lib/reseller'
 require 'plesk_lib/actions/create_customer'
