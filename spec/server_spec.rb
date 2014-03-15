@@ -16,4 +16,14 @@ describe PleskLib::Server do
       subject.create_customer_account(customer_account)
     end
   end
+
+  describe '#change_customer_account_password' do
+    it 'uses the PleskLib::Actions::ChangeCustomerAccountPassword action' do
+      customer_account = double(:customer_account)
+      PleskLib::Actions::ChangeCustomerAccountPassword.should_receive(:new).with(customer_account, 'new_password').and_call_original
+      PleskLib::Actions::ChangeCustomerAccountPassword.any_instance.should_receive(:execute_on).with(subject)
+
+      subject.change_customer_account_password(customer_account, 'new_password')
+    end
+  end
 end

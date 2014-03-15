@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'plesk_lib/actions/create_customer_account'
 
 describe PleskLib::Actions::CreateCustomerAccount do
   let(:customer_attributes) do
