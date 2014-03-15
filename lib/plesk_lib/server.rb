@@ -13,6 +13,11 @@ module PleskLib
       action.execute_on(self)
     end
 
+    def create_reseller(reseller)
+      action = PleskLib::Actions::CreateReseller.new(reseller)
+      action.execute_on(self)
+    end
+
     def change_customer_password(customer, new_password)
       action = PleskLib::Actions::ChangeCustomerPassword.new(customer, new_password)
       action.execute_on(self)

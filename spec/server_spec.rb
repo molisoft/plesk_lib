@@ -17,6 +17,16 @@ describe PleskLib::Server do
     end
   end
 
+  describe '#create_reseller' do
+    it 'uses the PleskLib::Actions::CreateReseller action' do
+      reseller = double(:reseller)
+      PleskLib::Actions::CreateReseller.should_receive(:new).with(reseller).and_call_original
+      PleskLib::Actions::CreateReseller.any_instance.should_receive(:execute_on).with(subject)
+
+      subject.create_reseller(reseller)
+    end
+  end
+
   describe '#change_customer_password' do
     it 'uses the PleskLib::Actions::ChangeCustomerPassword action' do
       customer = double(:customer)
