@@ -37,22 +37,9 @@ class PleskLib::Actions::CreateCustomer < PleskLib::Actions::Base
     return xml.target!
   end
 
-  def analyse(response_string)
-    xml = REXML::Document.new(response_string)
-    status = xml.root.elements['//status'].text if xml.root.elements['//status'].present?
-    if status == "error"
-      code = xml.root.elements['//errcode'].text.to_i
-      message = xml.root.elements['//errtext'].text
-      case code
-      when 1007 then
-        raise PleskLib::LoginAlreadyTaken, message
-      else
-        raise "#{code}: #{message}"
-      end
-    else
-      @plesk_id = xml.root.elements['//id'].text.to_i if xml.root.elements['//id'].present?
+  def analyse(xml_document)
+    if xml_document.root.elements['//id'].present?
+      @plesk_id = xml_document.root.elements['//id'].text.to_i
     end
-
-    return @plesk_id
   end
 end

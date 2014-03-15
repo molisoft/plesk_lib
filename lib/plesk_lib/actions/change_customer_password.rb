@@ -28,20 +28,4 @@ class PleskLib::Actions::ChangeCustomerPassword < PleskLib::Actions::Base
       }
     }
   end
-
-  def analyse(response_string)
-    xml = REXML::Document.new(response_string)
-    status = xml.root.elements['//status'].text if xml.root.elements['//status'].present?
-    if status == "error"
-      code = xml.root.elements['//errcode'].text.to_i
-      message = xml.root.elements['//errtext'].text
-      if code == 1013
-        raise PleskLib::AccountNotFound, message
-      else
-        raise "#{code}: #{message}"
-      end
-    else
-      true
-    end
-  end
 end
