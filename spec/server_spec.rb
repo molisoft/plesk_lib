@@ -36,4 +36,13 @@ describe PleskLib::Server do
       subject.change_customer_password(customer, 'new_password')
     end
   end
+
+  describe '#get_statistics' do
+    it 'uses the PleskLib::Actions::GetStatistics action' do
+      PleskLib::Actions::GetStatistics.should_receive(:new).and_call_original
+      PleskLib::Actions::GetStatistics.any_instance.should_receive(:execute_on).with(subject)
+
+      subject.get_statistics
+    end
+  end
 end
