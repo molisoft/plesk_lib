@@ -1,4 +1,5 @@
 require 'active_support/core_ext/object/blank'
+require 'active_support/core_ext/string/inflections'
 require 'plesk_lib/version'
 require 'plesk_lib/account'
 require 'plesk_lib/customer'

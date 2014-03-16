@@ -8,23 +8,9 @@ module PleskLib
       @password = password
     end
 
-    def create_customer(customer)
-      action = PleskLib::Actions::CreateCustomer.new(customer)
-      action.execute_on(self)
-    end
-
-    def create_reseller(reseller)
-      action = PleskLib::Actions::CreateReseller.new(reseller)
-      action.execute_on(self)
-    end
-
-    def change_customer_password(customer, new_password)
-      action = PleskLib::Actions::ChangeCustomerPassword.new(customer, new_password)
-      action.execute_on(self)
-    end
-
-    def get_statistics
-      action = PleskLib::Actions::GetStatistics.new
+    def method_missing(method_name, *args)
+      action_class = "PleskLib::Actions::#{method_name.to_s.camelize}".constantize
+      action = action_class.new(*args)
       action.execute_on(self)
     end
   end
