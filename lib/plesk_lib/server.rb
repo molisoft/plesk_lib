@@ -9,9 +9,14 @@ module PleskLib
     end
 
     def method_missing(method_name, *args)
-      action_class = "PleskLib::Actions::#{method_name.to_s.camelize}".constantize
-      action = action_class.new(*args)
-      action.execute_on(self)
+      begin
+        action_class = "PleskLib::Actions::#{method_name.to_s.camelize}".constantize
+      rescue NameError => e
+        raise NoMethodError, "The Action #{e.name} is not available. Please check the action docs."
+      else
+        action = action_class.new(*args)
+        action.execute_on(self)
+      end
     end
   end
 end
