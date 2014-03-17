@@ -5,15 +5,11 @@ class PleskLib::Actions::CreateAccount < PleskLib::Actions::Base
       xml.pname(account.person_name)
       xml.login(account.login) if account.login.present?
       xml.passwd(account.password) if account.password.present?
-      xml.status(account.status) if account.status.present?
-      xml.phone(account.phone) if account.phone.present?
-      xml.fax(account.fax) if account.fax.present?
-      xml.address(account.address) if account.address.present?
-      xml.city(account.city) if account.city.present?
-      xml.state(account.state) if account.state.present?
       xml.pcode(account.pcode) if account.postal_code.present?
-      xml.email(account.email) if account.email.present?
-      xml.country(account.country) if account.country.present?
+      %w(status phone fax address city state email country).each do |attribute|
+        value = account.send(attribute)
+        xml.tag!(attribute, value) if value.present?
+      end
       xml.tag!('owner-id', account.owner_id) if account.owner_id.present?
     }
     return xml.target!
