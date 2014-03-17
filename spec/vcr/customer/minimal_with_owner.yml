@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://10.0.0.158:8443/enterprise/control/agent.php
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><packet version="1.6.3.5"><customer><add><gen_info><cname>My
+        Company</cname><pname>FirstName LastName</pname><login>cust8891</login><passwd>customer_secret</passwd><phone>0000000000</phone><email>noreply@ausupport.com.au</email><country>AU</country><owner-id>3</owner-id></gen_info></add></customer></packet>
+    headers:
+      Http-Auth-Login:
+      - admin
+      Http-Auth-Passwd:
+      - ccsnDxnWy2j0
+      Content-Type:
+      - text/xml
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - sw-cp-server
+      Date:
+      - Thu, 13 Mar 2014 07:31:14 GMT
+      Content-Type:
+      - text/xml
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      P3p:
+      - CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"
+      Last-Modified:
+      - Thu, 13 Mar 2014 07:31:14 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Pragma:
+      - no-cache
+      Set-Cookie:
+      - PHPSESSID=a4791e7be8b79aaf7f016b74f1bc4ef8; path=/; secure; httponly
+      - locale=en-US; expires=Fri, 13-Mar-2015 07:31:14 GMT; path=/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <packet version="1.6.3.5"><customer><add><result><status>ok</status><id>29</id><guid>357a34cc-13ab-4a7c-892d-9b4b471b6ad8</guid></result></add></customer></packet>
+    http_version: 
+  recorded_at: Mon, 17 Mar 2014 13:41:56 GMT
+recorded_with: VCR 2.8.0

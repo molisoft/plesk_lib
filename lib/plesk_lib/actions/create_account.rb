@@ -1,7 +1,3 @@
-require 'plesk_lib/actions/base'
-require 'builder'
-require 'rexml/document'
-
 class PleskLib::Actions::CreateAccount < PleskLib::Actions::Base
   def build_gen_info(xml, account, tag_name = 'gen_info')
     xml.tag!(tag_name) {
@@ -18,6 +14,7 @@ class PleskLib::Actions::CreateAccount < PleskLib::Actions::Base
       xml.pcode(account.pcode) if account.postal_code.present?
       xml.email(account.email) if account.email.present?
       xml.country(account.country) if account.country.present?
+      xml.tag!('owner-id', account.owner_id) if account.owner_id.present?
     }
     return xml.target!
   end
