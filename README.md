@@ -19,53 +19,53 @@ And then execute:
 
 ## Usage
 
+Everything can be done through the server:
+
+### Customers:
+
 ```
 server = PleskLib::Server.new('192.168.0.1', 'admin', 'yourPleskPassword')
-customer_account = PleskLib::CustomerAccount.new('user92', {password: 'foobar', person_name: 'foo'})
-server.create_customer_account customer_account
+
+# Create customer accounts (add it to a reseller by adding owner_id: [x] to the options hash):
+customer = PleskLib::Customer.new('user92', {password: 'foobar', person_name: 'foo'}) 
+server.create_customer(customer)
+
+# List customer accounts:
+server.list_customers
 ```
 
+### Resellers:
 
-
-Service Plans:
-Create a service plan record in the database, currently you can customise a few settings (mailboxes, :domains, :name, :traffic, :storage)
-If this service plan is not found by name on the server which the gem is attempting to provision to, it will create the service plan before creating the subscription. Note: use "-1" for unlimited.
 ```
-PleskKit::ServicePlan.create(:name => "My Plan", :mailboxes => "10", :storage => "21474836480", :domains => "1",  :traffic => "-1")
+reseller_account = PleskLib::Reseller.new('reseller01', {password: 'foobar', person_name: 'foo'})  
+server.create_reseller(reseller)
 ```
 
-To create a Customer in Plesk:
+### Service Plans:
+
+``` 
+# Create a service plan:
+
+service_plan = PleskLib::ServicePlan.new("My Plan", {mailboxes: 10, storage: 2.gigabytes, domains: 1, traffic: 30.gigabytes})
+server.create_service_plan(service_plan)
 ```
-customer = PleskKit::CustomerAccount.create(:pname => "FirstName LastName", :cname => "My Company", :login => "uniquelogin", :password => "s0m3P@55w0rd")
-```
+
 
 To create a new subscription for a customer in Plesk:
 ```
 PleskKit::Subscription.create(:customer_account_id => customer.id, :plan_name => 'Unlimited', :name => 'foobar.domain.com')
 ```
 
-To create a Reseller in Plesk:
-```
-PleskKit::ResellerAccount.create(:pname => "FirstName LastName", :cname => "My Company", :login => "uniquelogin", :password => "s0m3P@55w0rd", :plan_name => "My Reseller Plan")
-```
+## How it works: 
 
-## Current Issues:
-* Passwords are stored in the clear at the moment
+Every operation on the server is implemented in an action class inside `lib/plesk_lib/actions`. Please refer to the action class for usage and/or inner workings and add or modify actions as you like.
 
-## Upcoming Features/Enhancements
-Some new features are slowly on the way, these include:
-* Ability to query Server statistics / performance metrics
-* Password Encryption, with the ability to shake your own salt
-* Shiny Plesk-Look Interfaces
-* More functional test/dummy app
-
-If you have a suggestion for a new feature, either submit a pull request (as per 'Contributing' section below) or post a message and I'll get to it when I can.
-
-## Contributing
+## Contributing 
 
 1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
+2. Please test what you do:
+    - Create your feature branch (`git checkout -b my-new-feature`)
+    - **Test your changes and record a test with VCR**
+3. Commit your changes (`git commit -am 'Add some feature'`) 
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
