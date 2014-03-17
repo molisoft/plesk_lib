@@ -1,16 +1,12 @@
 # PleskLib [![Gem Version](https://badge.fury.io/rb/plesk_lib.png)](http://badge.fury.io/rb/plesk_lib)
 
-
-In development, but usable. Tested against Plesk for Linux 11.5
-
-As of release 2.0.0, PleskKit can cope with a fleet of plesk servers. It will select the server with the lowest RAM consumption which matches your current Rails.env and desired platform (i.e. windows or linux).
-
+Under heavy development, but usable. Tested against Plesk for Linux 11.5
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'plesk_kit'
+    gem 'plesk_lib'
 
 And then execute:
 
@@ -19,19 +15,30 @@ And then execute:
 
 ## Usage
 
-Everything can be done through the server:
+Everything can be done through the server object:
+
+```
+server = PleskLib::Server.new('192.168.0.1', 'admin', 'yourPleskPassword')
+response = server.get_statistics
+response.statistics
+```
 
 ### Customers:
 
 ```
-server = PleskLib::Server.new('192.168.0.1', 'admin', 'yourPleskPassword')
 
 # Create customer accounts (add it to a reseller by adding owner_id: [x] to the options hash):
 customer = PleskLib::Customer.new('user92', {password: 'foobar', person_name: 'foo'}) 
-server.create_customer(customer)
+response = server.create_customer(customer)
+puts 'Plesk id:   ' + response.plesk_id
+puts 'Plesk GUID: ' + response.guid
 
-# List customer accounts:
-server.list_customers
+# List all customer accounts:
+response = server.list_customers
+response.customers.each { |customer| puts customer.company_name, customer.login }
+
+# or just the customers of an owner by id:
+response = server.list_customers(3)
 ```
 
 ### Resellers:
@@ -50,10 +57,16 @@ service_plan = PleskLib::ServicePlan.new("My Plan", {mailboxes: 10, storage: 2.g
 server.create_service_plan(service_plan)
 ```
 
+### Subscriptions:
 
 To create a new subscription for a customer in Plesk:
+
 ```
-PleskKit::Subscription.create(:customer_account_id => customer.id, :plan_name => 'Unlimited', :name => 'foobar.domain.com')
+subscription_settings = { name: 'foo-domain.de', ip_address: '10.0.0.158',
+                          owner_id: 3, service_plan_id: 10, ftp_login: 'ftp01',
+                          ftp_password: 'ftpPass01' }
+subscription = PleskLib::Subscription.new(subscription_settings)
+server.create_subscription(subscription)
 ```
 
 ## How it works: 
@@ -69,3 +82,8 @@ Every operation on the server is implemented in an action class inside `lib/ples
 3. Commit your changes (`git commit -am 'Add some feature'`) 
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+
+## Thanks
+
+Special thanks to the `plesk_kit` gem by tresacton.
