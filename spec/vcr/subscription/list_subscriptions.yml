@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://10.0.0.158:8443/enterprise/control/agent.php
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><packet version="1.6.3.5"><webspace><get><filter></filter><dataset><gen_info/><hosting/></dataset></get></webspace></packet>
+    headers:
+      Http-Auth-Login:
+      - admin
+      Http-Auth-Passwd:
+      - ccsnDxnWy2j0
+      Content-Type:
+      - text/xml
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - sw-cp-server
+      Date:
+      - Thu, 13 Mar 2014 12:02:29 GMT
+      Content-Type:
+      - text/xml
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      P3p:
+      - CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"
+      Last-Modified:
+      - Thu, 13 Mar 2014 12:02:28 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Pragma:
+      - no-cache
+      Set-Cookie:
+      - PHPSESSID=cac543bdcb2d10f7e84e00ec572f505b; path=/; secure; httponly
+      - locale=en-US; expires=Fri, 13-Mar-2015 12:02:29 GMT; path=/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <packet version="1.6.3.5"><webspace><get><result><status>ok</status><filter-id>1</filter-id><id>1</id><data><gen_info><cr_date>2014-03-10</cr_date><name>somedomain.de</name><ascii-name>somedomain.de</ascii-name><status>0</status><real_size>141190649</real_size><owner-id>4</owner-id><dns_ip_address>10.0.0.158</dns_ip_address><htype>vrt_hst</htype><guid>5142fa81-95c1-4ab4-84f6-cc588ff53e2b</guid><vendor-guid>3f2fb67d-9f62-4ba9-a88d-8f8b6877c95c</vendor-guid><external-id></external-id><sb-site-uuid></sb-site-uuid></gen_info><hosting><vrt_hst><property><name>ftp_login</name><value>cust02</value></property><property><name>ftp_password</name><value>sLzpPl94HXjEr2bHJsRe</value></property><property><name>ftp_password_type</name><value>plain</value></property><property><name>ftp_quota</name><value>-1</value></property><property><name>fp</name><value>false</value></property><property><name>fp_ssl</name><value>false</value></property><property><name>fp_auth</name><value>false</value></property><property><name>fp_admin_login</name><value></value></property><property><name>fp_admin_password</name><value></value></property><property><name>ssl</name><value>true</value></property><property><name>shell</name><value>/bin/false</value></property><property><name>php</name><value>true</value></property><property><name>php_handler_type</name><value>fastcgi</value></property><property><name>ssi</name><value>false</value></property><property><name>cgi</name><value>true</value></property><property><name>perl</name><value>false</value></property><property><name>python</name><value>false</value></property><property><name>asp</name><value>false</value></property><property><name>asp_dot_net</name><value>false</value></property><property><name>miva</name><value>false</value></property><property><name>coldfusion</name><value>false</value></property><property><name>webstat</name><value>webalizer</value></property><property><name>webstat_protected</name><value>true</value></property><property><name>errdocs</name><value>true</value></property><property><name>wuscripts</name><value>true</value></property><property><name>at_domains</name><value>false</value></property><property><name>fastcgi</name><value>true</value></property><property><name>cgi_mode</name><value></value></property><property><name>www_root</name><value>/var/www/vhosts/somedomain.de/httpdocs</value></property><property><name>safe_mode</name><value>off</value></property><property><name>open_basedir</name><value>{WEBSPACEROOT}{/}{:}{TMP}{/}</value></property><property><name>nginx-transparent-mode</name><value>false</value></property><property><name>nginx-serve-static</name><value>false</value></property><ip_address>10.0.0.158</ip_address></vrt_hst></hosting></data></result><result><status>ok</status><filter-id>4</filter-id><id>4</id><data><gen_info><cr_date>2014-03-12</cr_date><name>test.com</name><ascii-name>test.com</ascii-name><status>0</status><real_size>462848</real_size><owner-id>4</owner-id><dns_ip_address>10.0.0.158</dns_ip_address><htype>vrt_hst</htype><guid>4eab4c28-c82f-4d69-9454-a8f7afbd66a3</guid><vendor-guid>3f2fb67d-9f62-4ba9-a88d-8f8b6877c95c</vendor-guid><external-id></external-id><sb-site-uuid></sb-site-uuid></gen_info><hosting><vrt_hst><property><name>ftp_login</name><value>fcust03</value></property><property><name>ftp_password</name><value>pT1cd7*7</value></property><property><name>ftp_password_type</name><value>plain</value></property><property><name>ftp_quota</name><value>-1</value></property><property><name>fp</name><value>false</value></property><property><name>fp_ssl</name><value>false</value></property><property><name>fp_auth</name><value>false</value></property><property><name>fp_admin_login</name><value></value></property><property><name>fp_admin_password</name><value></value></property><property><name>ssl</name><value>true</value></property><property><name>shell</name><value>/bin/false</value></property><property><name>php</name><value>true</value></property><property><name>php_handler_type</name><value>fastcgi</value></property><property><name>ssi</name><value>false</value></property><property><name>cgi</name><value>true</value></property><property><name>perl</name><value>false</value></property><property><name>python</name><value>false</value></property><property><name>asp</name><value>false</value></property><property><name>asp_dot_net</name><value>false</value></property><property><name>miva</name><value>false</value></property><property><name>coldfusion</name><value>false</value></property><property><name>webstat</name><value>webalizer</value></property><property><name>webstat_protected</name><value>true</value></property><property><name>errdocs</name><value>true</value></property><property><name>wuscripts</name><value>true</value></property><property><name>at_domains</name><value>false</value></property><property><name>fastcgi</name><value>true</value></property><property><name>cgi_mode</name><value></value></property><property><name>www_root</name><value>/var/www/vhosts/test.com/httpdocs</value></property><property><name>safe_mode</name><value>off</value></property><property><name>open_basedir</name><value>{WEBSPACEROOT}{/}{:}{TMP}{/}</value></property><property><name>nginx-transparent-mode</name><value>false</value></property><property><name>nginx-serve-static</name><value>false</value></property><ip_address>10.0.0.158</ip_address></vrt_hst></hosting></data></result><result><status>ok</status><filter-id>6</filter-id><id>6</id><data><gen_info><cr_date>2014-03-12</cr_date><name>web.de</name><ascii-name>web.de</ascii-name><status>0</status><real_size>471040</real_size><owner-login>admin</owner-login><dns_ip_address>10.0.0.158</dns_ip_address><htype>vrt_hst</htype><guid>99be8b3d-9a48-4d15-a708-49e633efb152</guid><vendor-guid>6567bf8b-dbf2-4ef3-9822-27771518e6ed</vendor-guid><external-id></external-id><sb-site-uuid></sb-site-uuid></gen_info><hosting><vrt_hst><property><name>ftp_login</name><value>sys01</value></property><property><name>ftp_password</name><value>Lpft76*2</value></property><property><name>ftp_password_type</name><value>plain</value></property><property><name>ftp_quota</name><value>-1</value></property><property><name>fp</name><value>false</value></property><property><name>fp_ssl</name><value>false</value></property><property><name>fp_auth</name><value>false</value></property><property><name>fp_admin_login</name><value></value></property><property><name>fp_admin_password</name><value></value></property><property><name>ssl</name><value>true</value></property><property><name>shell</name><value>/bin/false</value></property><property><name>php</name><value>true</value></property><property><name>php_handler_type</name><value>fastcgi</value></property><property><name>ssi</name><value>false</value></property><property><name>cgi</name><value>true</value></property><property><name>perl</name><value>false</value></property><property><name>python</name><value>false</value></property><property><name>asp</name><value>false</value></property><property><name>asp_dot_net</name><value>false</value></property><property><name>miva</name><value>false</value></property><property><name>coldfusion</name><value>false</value></property><property><name>webstat</name><value>webalizer</value></property><property><name>webstat_protected</name><value>false</value></property><property><name>errdocs</name><value>true</value></property><property><name>wuscripts</name><value>true</value></property><property><name>at_domains</name><value>false</value></property><property><name>fastcgi</name><value>true</value></property><property><name>cgi_mode</name><value></value></property><property><name>www_root</name><value>/var/www/vhosts/web.de/httpdocs</value></property><property><name>safe_mode</name><value>on</value></property><property><name>open_basedir</name><value>{WEBSPACEROOT}{/}{:}{TMP}{/}</value></property><property><name>nginx-transparent-mode</name><value>false</value></property><property><name>nginx-serve-static</name><value>false</value></property><ip_address>10.0.0.158</ip_address></vrt_hst></hosting></data></result></get></webspace></packet>
+    http_version: 
+  recorded_at: Mon, 17 Mar 2014 18:13:12 GMT
+recorded_with: VCR 2.8.0
