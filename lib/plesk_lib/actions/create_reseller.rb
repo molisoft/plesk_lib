@@ -1,7 +1,3 @@
-require 'plesk_lib/actions/create_account'
-require 'builder'
-require 'rexml/document'
-
 class PleskLib::Actions::CreateReseller < PleskLib::Actions::CreateAccount
   attr_reader :reseller, :plesk_id
 

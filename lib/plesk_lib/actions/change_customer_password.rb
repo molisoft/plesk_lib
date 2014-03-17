@@ -1,7 +1,3 @@
-require 'plesk_lib/actions/base'
-require 'builder'
-require 'rexml/document'
-
 class PleskLib::Actions::ChangeCustomerPassword < PleskLib::Actions::Base
   attr_reader :customer, :new_password
 

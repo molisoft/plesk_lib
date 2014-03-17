@@ -1,7 +1,3 @@
-require 'plesk_lib/actions/base'
-require 'builder'
-require 'bigdecimal'
-
 class PleskLib::Actions::GetStatistics < PleskLib::Actions::Base
   #  Creates Object & Packet
   def build_xml
