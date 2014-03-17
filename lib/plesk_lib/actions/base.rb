@@ -7,7 +7,7 @@ module PleskLib::Actions
     def execute_on(server)
       request_xml = build_xml
       response_xml = send_xml_to_server(server, request_xml)
-      response_document = REXML::Document.new(response_xml)
+      response_document = Ox.parse(response_xml)
       parse_errors(response_document)
       analyse(response_document)
       return true
@@ -16,10 +16,10 @@ module PleskLib::Actions
     protected
 
     def parse_errors(xml_document)
-      status = xml_document.root.elements['//status'].text if xml_document.root.elements['//status'].present?
+      status = xml_document.root.locate('*/status').first.text
       return unless status == "error"
-      code = xml_document.root.elements['//errcode'].text.to_i
-      message = xml_document.root.elements['//errtext'].text
+      code = xml_document.root.locate('*/errcode').first.text.to_i
+      message = xml_document.root.locate('*/errtext').first.text
 
       # this catches the duplicate account error for resellers
       if code == 1019 and message.include?('already exists')

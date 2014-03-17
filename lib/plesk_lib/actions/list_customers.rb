@@ -1,5 +1,6 @@
 class PleskLib::Actions::ListCustomers < PleskLib::Actions::Base
   attr_reader :customers
+
   MAPPING = {
     'cr_date' => 'created_at', 'cname' => 'company_name', 'pname' => 'person_name',
     'login' => 'login', 'status' => 'status', 'phone' => 'phone', 'fax' => 'fax',
@@ -29,13 +30,13 @@ class PleskLib::Actions::ListCustomers < PleskLib::Actions::Base
 
   def analyse(xml_document)
     @customers = []
-    xml_document.root.elements['//customer//get'].each_element do |el|
+    xml_document.root.customer.get.nodes.each do |customer_node|
       customer = PleskLib::Customer.new(nil)
-      el.elements['data//gen_info'].each_element do |attribute|
-        customer_attribute = MAPPING[attribute.name]
+      customer_node.data.gen_info.nodes.each do |attribute_node|
+        customer_attribute = MAPPING[attribute_node.name]
         next if customer_attribute.blank? || !customer.respond_to?(customer_attribute) ||
-                attribute.text.blank?
-        customer.send("#{customer_attribute}=", attribute.text)
+                attribute_node.text.blank?
+        customer.send("#{customer_attribute}=", attribute_node.text)
       end
       customer.status = customer.status.to_i
       @customers << customer

@@ -35,16 +35,16 @@ class PleskLib::Actions::ListServicePlans < PleskLib::Actions::Base
 
   def analyse(xml_document)
     @service_plans = []
-    xml_document.root.elements['//service-plan//get'].each_element do |plan_el|
-      service_plan = PleskLib::ServicePlan.new(plan_el.elements['name'].text)
+    xml_document.root.send('service-plan').get.nodes.each do |plan_el|
+      service_plan = PleskLib::ServicePlan.new(plan_el.locate('name').first.text)
       # binding.pry
-      service_plan.id = plan_el.elements['id'].text.to_i
-      service_plan.external_id = plan_el.elements['external-id'].text
-      service_plan.guid = plan_el.elements['guid'].text
+      service_plan.id = plan_el.send('id').text.to_i
+      service_plan.external_id = plan_el.send('external-id').text
+      service_plan.guid = plan_el.send('guid').text
 
-      owner_id_el = plan_el.elements['owner-id']
-      if owner_id_el.present?
-        service_plan.owner_id = owner_id_el.text.to_i
+      owner_id_nodes = plan_el.locate('owner-id')
+      if owner_id_nodes.first.present?
+        service_plan.owner_id = owner_id_nodes.first.text.to_i
       end
 
       # plan_el.elements['data//gen_info'].each_element do |attribute|

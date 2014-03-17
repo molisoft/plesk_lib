@@ -320,9 +320,8 @@ class PleskLib::Actions::CreateServicePlan < PleskLib::Actions::Base
   end
 
   def analyse(xml_document)
-    if xml_document.root.elements['//add'].present?
-      @plesk_id =  xml_document.root.elements['//id'].text.to_i
-      @guid =  xml_document.root.elements['//guid'].text
-    end
+    add_node = xml_document.root.locate('*/result').first
+    @plesk_id = add_node.id.text.to_i
+    @guid = add_node.guid.text
   end
 end

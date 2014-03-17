@@ -16,8 +16,8 @@ class PleskLib::Actions::CreateAccount < PleskLib::Actions::Base
   end
 
   def analyse(xml_document)
-    if xml_document.root.elements['//id'].present?
-      @plesk_id = xml_document.root.elements['//id'].text.to_i
-    end
+    add_node = xml_document.root.locate('*/result').first
+    @plesk_id = add_node.id.text.to_i
+    @guid = add_node.guid.text
   end
 end
