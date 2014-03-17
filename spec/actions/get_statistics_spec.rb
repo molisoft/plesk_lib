@@ -6,10 +6,10 @@ describe PleskLib::Actions::GetStatistics do
   it 'should return a statistics hash' do
     VCR.use_cassette 'server/get_statistics', match_requests_on: [:method, :uri, :body] do
       action = PleskLib::Actions::GetStatistics.new
-      return_value = action.execute_on(server)
+      action.execute_on(server)
 
-      return_value.should_not be_empty
-      return_value[:objects].should_not be_empty
+      action.statistics.should_not be_empty
+      action.statistics[:objects].should_not be_empty
     end
   end
 end

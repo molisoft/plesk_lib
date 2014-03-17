@@ -1,5 +1,6 @@
 class PleskLib::Actions::GetStatistics < PleskLib::Actions::Base
-  #  Creates Object & Packet
+  attr_reader :statistics
+
   def build_xml
     xml = Builder::XmlMarkup.new
     xml.instruct!
@@ -14,7 +15,7 @@ class PleskLib::Actions::GetStatistics < PleskLib::Actions::Base
   end
 
   def analyse(xml_document)
-    stats = {}
+    @statistics = {}
     object_stats = {}
     device_stats = {}
 
@@ -23,15 +24,15 @@ class PleskLib::Actions::GetStatistics < PleskLib::Actions::Base
     end
 
     xml_document.root.elements['//stat//load_avg'].each_element do |element|
-      stats[element.name] = element.text.to_f / 100
+      @statistics[element.name] = element.text.to_f / 100
     end
 
     xml_document.root.elements['//stat//mem'].each_element do |element|
-      stats['mem_' + element.name] = BigDecimal.new(element.text)
+      @statistics['mem_' + element.name] = BigDecimal.new(element.text)
     end
 
     xml_document.root.elements['//stat//swap'].each_element do |element|
-      stats['swap_' + element.name] = BigDecimal.new(element.text)
+      @statistics['swap_' + element.name] = BigDecimal.new(element.text)
     end
 
     xml_document.root.elements['//stat//diskspace'].each_element do |device_node|
@@ -48,9 +49,8 @@ class PleskLib::Actions::GetStatistics < PleskLib::Actions::Base
 
     text_elements = xml_document.root.elements['//stat//version'].to_a + xml_document.root.elements['//stat//other'].to_a
     text_elements.each do |element|
-      stats[element.name] = element.name == 'uptime' ? element.text.to_i : element.text
+      @statistics[element.name] = element.name == 'uptime' ? element.text.to_i : element.text
     end
-
-    return stats.merge({objects: object_stats, devices: device_stats})
+    @statistics.merge!({objects: object_stats, devices: device_stats})
   end
 end

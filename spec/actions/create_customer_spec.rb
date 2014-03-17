@@ -14,9 +14,7 @@ describe PleskLib::Actions::CreateCustomer do
     it 'should create a customer' do
       VCR.use_cassette 'customer/minimal', match_requests_on: [:method, :uri, :body] do
         action = PleskLib::Actions::CreateCustomer.new(customer)
-        return_value = action.execute_on(server)
-
-        return_value.to_i.should > 0
+        action.execute_on(server)
         action.plesk_id.to_i.should > 0
       end
     end
@@ -33,9 +31,7 @@ describe PleskLib::Actions::CreateCustomer do
     it 'should create a customer' do
       VCR.use_cassette 'customer/minimal_with_owner', match_requests_on: [:method, :uri, :body] do
         action = PleskLib::Actions::CreateCustomer.new(customer)
-        return_value = action.execute_on(server)
-
-        return_value.to_i.should > 0
+        action.execute_on(server)
         action.plesk_id.to_i.should > 0
       end
     end

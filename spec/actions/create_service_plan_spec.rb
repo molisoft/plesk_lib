@@ -8,7 +8,7 @@ describe PleskLib::Actions::CreateServicePlan do
   it 'should create a service plan' do
     VCR.use_cassette 'service_plan/create_minimal', match_requests_on: [:method, :uri, :body] do
       action = PleskLib::Actions::CreateServicePlan.new(service_plan)
-      return_value = action.execute_on(server)
+      action.execute_on(server)
 
       action.plesk_id.to_i.should > 0
       action.guid.length.should == 36 #guid is 36 characters long
@@ -23,7 +23,7 @@ describe PleskLib::Actions::CreateServicePlan do
     it 'should create a service plan for a reseller' do
       VCR.use_cassette 'service_plan/create_minimal_with_owner', match_requests_on: [:method, :uri, :body] do
         action = PleskLib::Actions::CreateServicePlan.new(service_plan)
-        return_value = action.execute_on(server)
+        action.execute_on(server)
 
         action.plesk_id.to_i.should > 0
         action.guid.length.should == 36 #guid is 36 characters long

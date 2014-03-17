@@ -1,4 +1,5 @@
 class PleskLib::Actions::ListCustomers < PleskLib::Actions::Base
+  attr_reader :customers
   MAPPING = {
     'cr_date' => 'created_at', 'cname' => 'company_name', 'pname' => 'person_name',
     'login' => 'login', 'status' => 'status', 'phone' => 'phone', 'fax' => 'fax',
@@ -27,7 +28,7 @@ class PleskLib::Actions::ListCustomers < PleskLib::Actions::Base
   end
 
   def analyse(xml_document)
-    customers = []
+    @customers = []
     xml_document.root.elements['//customer//get'].each_element do |el|
       customer = PleskLib::Customer.new(nil)
       el.elements['data//gen_info'].each_element do |attribute|
@@ -37,8 +38,7 @@ class PleskLib::Actions::ListCustomers < PleskLib::Actions::Base
         customer.send("#{customer_attribute}=", attribute.text)
       end
       customer.status = customer.status.to_i
-      customers << customer
+      @customers << customer
     end
-    customers
   end
 end

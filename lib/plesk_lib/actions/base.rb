@@ -10,6 +10,7 @@ module PleskLib::Actions
       response_document = REXML::Document.new(response_xml)
       parse_errors(response_document)
       analyse(response_document)
+      return true
     end
 
     protected

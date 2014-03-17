@@ -15,9 +15,8 @@ describe PleskLib::Actions::CreateReseller do
     it 'should create a reseller' do
       VCR.use_cassette 'reseller/minimal', match_requests_on: [:method, :uri, :body] do
         action = PleskLib::Actions::CreateReseller.new(reseller)
-        return_value = action.execute_on(server)
+        action.execute_on(server)
 
-        return_value.to_i.should > 0
         action.plesk_id.to_i.should > 0
       end
     end
