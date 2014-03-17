@@ -1,26 +1,20 @@
-module PleskLib
-  class ServicePlan
-    attr_accessor :name, :mailboxes, :domains, :traffic, :storage, :external_id,
-                  :owner_id
+class PleskLib::Actions::CreateServicePlan < PleskLib::Actions::Base
+  attr_reader :service_plan, :guid, :plesk_id
 
-    def initialize(name, attributes = {})
-      @name = name
-      attributes.each_pair do |key, value|
-        send("#{key}=", value)
-      end if attributes.present?
-    end
+  def initialize(service_plan)
+    @service_plan = service_plan
+  end
 
-    def find_or_push server
-      PleskLib::Communicator.get_service_plan self, server
-    end
-
-    def build_windows_xml_for_add shell
-      xml = shell
-      xml.instruct!
+  def build_xml
+    xml = Builder::XmlMarkup.new
+    xml.instruct!
       xml.packet(:version => '1.6.3.0') {
         xml.tag!("service-plan")  {
-          xml.add{
-            xml.name("#{self.name.to_s}")
+          xml.add {
+            xml.name("#{service_plan.name}")
+            if service_plan.owner_id.present?
+              xml.tag!('owner-id', service_plan.owner_id)
+            end
             xml.mail{
               xml.webmail('horde')
             }
@@ -29,7 +23,7 @@ module PleskLib
 
               xml.limit{
                 xml.name('max_site')
-                xml.value("#{self.domains.to_s}")
+                xml.value("#{service_plan.domains.to_s}")
               }
               xml.limit{
                 xml.name('max_subdom')
@@ -41,7 +35,7 @@ module PleskLib
               }
               xml.limit{
                 xml.name('disk_space')
-                xml.value("#{self.storage}") #10gb
+                xml.value("#{service_plan.storage.to_s}") #10gb
               }
               xml.limit{
                 xml.name('disk_space_soft')
@@ -49,7 +43,7 @@ module PleskLib
               }
               xml.limit{
                 xml.name('max_traffic')
-                xml.value("#{self.traffic.to_s}") # unlimited
+                xml.value("#{service_plan.traffic.to_s}") # unlimited
               }
               xml.limit{
                 xml.name('max_traffic_soft')
@@ -68,12 +62,8 @@ module PleskLib
                 xml.value('-1')
               }
               xml.limit{
-                xml.name('max_mssql_db')
-                xml.value('-1')
-              }
-              xml.limit{
                 xml.name('max_box')
-                xml.value("#{self.mailboxes.to_s}") # mailboxes
+                xml.value("#{service_plan.mailboxes.to_s}") # mailboxes
               }
               xml.limit{
                 xml.name('mbox_quota')
@@ -82,10 +72,6 @@ module PleskLib
               xml.limit{
                 xml.name('max_maillists')
                 xml.value('100')
-              }
-              xml.limit{
-                xml.name('total_mboxes_quota')
-                xml.value('-1')
               }
               xml.limit{
                 xml.name('max_webapps')
@@ -103,14 +89,14 @@ module PleskLib
                 xml.name('expiration')
                 xml.value('-1')
               }
-              xml.limit{
-                xml.name('upsell_site_builder')
-                xml.value('0')
-              }
+              # xml.limit{
+              #   xml.name('upsell_site_builder')
+              #   xml.value('0')
+              # }
 
             }
             xml.tag!("log-rotation"){
-              xml.on{
+            xml.on{
                 xml.tag!("log-condition"){
                   xml.tag!("log-bysize", "10485760")
                 }
@@ -152,10 +138,10 @@ module PleskLib
                 xml.name('wu_script')
                 xml.value('true')
               }
-              #xml.property{
-              #  xml.name('shell')
-              #  xml.value('/bin/false')
-              #}
+              xml.property{
+                xml.name('shell')
+                xml.value('/bin/false')
+              }
               xml.property{
                 xml.name('ftp_quota')
                 xml.value('-1')
@@ -188,10 +174,10 @@ module PleskLib
                 xml.name('python')
                 xml.value('true')
               }
-              #xml.property{
-              #  xml.name('fastcgi')
-              #  xml.value('true')
-              #}
+              xml.property{
+                xml.name('fastcgi')
+                xml.value('true')
+              }
               xml.property{
                 xml.name('miva')
                 xml.value('false')
@@ -222,10 +208,10 @@ module PleskLib
                 xml.name('manage_sh_access')
                 xml.value('false')
               }
-              #xml.permission{
-              #  xml.name('manage_not_chroot_shell')
-              #  xml.value('false')
-              #}
+              xml.permission{
+                xml.name('manage_not_chroot_shell')
+                xml.value('false')
+              }
               xml.permission{
                 xml.name('manage_quota')
                 xml.value('false')
@@ -323,13 +309,20 @@ module PleskLib
                 xml.value('false')
               }
             }
+
+            if service_plan.external_id.present?
+              xml.tag!('external-id', service_plan.external_id)
+            end
           }
         }
       }
-      puts xml.target!
       return xml.target!
+  end
+
+  def analyse(xml_document)
+    if xml_document.root.elements['//add'].present?
+      @plesk_id =  xml_document.root.elements['//id'].text.to_i
+      @guid =  xml_document.root.elements['//guid'].text
     end
-
-
   end
 end
