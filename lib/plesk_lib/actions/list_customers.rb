@@ -11,13 +11,19 @@ class PleskLib::Actions::ListCustomers < PleskLib::Actions::Base
     'password_type' => 'password_type'
   }
 
+  def initialize(owner_id = nil)
+    @owner_id = owner_id
+  end
+
   def build_xml
     xml = Builder::XmlMarkup.new
     xml.instruct!
     xml.packet(:version => '1.6.3.5') {
       xml.customer {
         xml.get {
-          xml.filter
+          xml.filter {
+            xml.tag!('owner-id', @owner_id) if @owner_id.present?
+          }
           xml.dataset {
             xml.gen_info
             xml.stat

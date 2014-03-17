@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://10.0.0.158:8443/enterprise/control/agent.php
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><packet version="1.6.3.5"><customer><get><filter><owner-id>3</owner-id></filter><dataset><gen_info/><stat/></dataset></get></customer></packet>
+    headers:
+      Http-Auth-Login:
+      - admin
+      Http-Auth-Passwd:
+      - ccsnDxnWy2j0
+      Content-Type:
+      - text/xml
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - sw-cp-server
+      Date:
+      - Thu, 13 Mar 2014 11:36:30 GMT
+      Content-Type:
+      - text/xml
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      P3p:
+      - CP="NON COR CURa ADMa OUR NOR UNI COM NAV STA"
+      Last-Modified:
+      - Thu, 13 Mar 2014 11:36:30 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Cache-Control:
+      - no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+      Pragma:
+      - no-cache
+      Set-Cookie:
+      - PHPSESSID=6c23b27e419e8f38d5ebf23504a35d9f; path=/; secure; httponly
+      - locale=en-US; expires=Fri, 13-Mar-2015 11:36:30 GMT; path=/
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <packet version="1.6.3.5"><customer><get><result><status>ok</status><filter-id>3</filter-id><id>4</id><data><gen_info><cr_date>2014-03-12</cr_date><cname></cname><pname>Reseller Customer</pname><login>testcust</login><status>0</status><phone></phone><fax></fax><email>test@example.com</email><address></address><city></city><state></state><pcode></pcode><country>US</country><locale>en-US</locale><guid>b6b2e111-fd18-492d-b29a-a0f7a0ab364b</guid><owner-id>3</owner-id><vendor-guid>3f2fb67d-9f62-4ba9-a88d-8f8b6877c95c</vendor-guid><external-id></external-id><password>$5$/icTLVsiBWUpIF5Y$/AWgib3eN3JR5jL.MDATy6/e1i1j0ScOqG70BYSJwy8</password><password_type>crypt</password_type></gen_info><stat><active_domains>5</active_domains><subdomains>1</subdomains><disk_space>142099961</disk_space><postboxs>1</postboxs><redirects>0</redirects><mail_groups>0</mail_groups><mail_resps>0</mail_resps><mail_lists>0</mail_lists><web_users>0</web_users><data_bases>4</data_bases><webapps>0</webapps><traffic>0</traffic><traffic_prevday>0</traffic_prevday></stat></data></result><result><status>ok</status><filter-id>3</filter-id><id>29</id><data><gen_info><cr_date>2014-03-13</cr_date><cname>My Company</cname><pname>FirstName LastName</pname><login>cust8891</login><status>0</status><phone>0000000000</phone><fax></fax><email>noreply@ausupport.com.au</email><address></address><city></city><state></state><pcode></pcode><country>AU</country><locale>en-US</locale><guid>357a34cc-13ab-4a7c-892d-9b4b471b6ad8</guid><owner-id>3</owner-id><vendor-guid>3f2fb67d-9f62-4ba9-a88d-8f8b6877c95c</vendor-guid><external-id></external-id><password>$5$vd5cxHqUIojoaVsc$UY2wweso42Uhqsk2ns9fq19OdsCDGCecdm6CHxBkQe9</password><password_type>crypt</password_type></gen_info><stat><active_domains>0</active_domains><subdomains>0</subdomains><disk_space>0</disk_space><postboxs>0</postboxs><redirects>0</redirects><mail_groups>0</mail_groups><mail_resps>0</mail_resps><mail_lists>0</mail_lists><web_users>0</web_users><data_bases>0</data_bases><webapps>0</webapps><traffic>0</traffic><traffic_prevday>0</traffic_prevday></stat></data></result></get></customer></packet>
+    http_version: 
+  recorded_at: Mon, 17 Mar 2014 17:47:12 GMT
+recorded_with: VCR 2.8.0
