@@ -16,6 +16,7 @@ module PleskLib
       else
         action = action_class.new(*args)
         action.execute_on(self)
+        return action
       end
     end
   end
