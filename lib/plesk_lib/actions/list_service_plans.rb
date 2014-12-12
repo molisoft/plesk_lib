@@ -43,7 +43,7 @@ class PleskLib::Actions::ListServicePlans < PleskLib::Actions::Base
       service_plan.guid = plan_el.send('guid').text
 
       owner_id_nodes = plan_el.locate('owner-id')
-      if owner_id_nodes.first.present?
+      if owner_id_nodes.first
         service_plan.owner_id = owner_id_nodes.first.text.to_i
       end
 
