@@ -23,6 +23,7 @@ require 'plesk_lib/actions/change_customer_subscription_plan'
 require 'plesk_lib/actions/list_customers'
 require 'plesk_lib/actions/list_service_plans'
 require 'plesk_lib/actions/list_subscriptions'
+require 'plesk_lib/actions/delete_customer'
 require 'plesk_lib/actions/get_statistics'
 
 module PleskLib
