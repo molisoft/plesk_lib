@@ -9,7 +9,7 @@ class PleskLib::Actions::CreateSubscription < PleskLib::Actions::Base
   def build_xml
     xml = Builder::XmlMarkup.new
     xml.instruct!
-    xml.packet(:version => '1.6.3.5') {
+    xml.packet {
       xml.webspace {
         xml.add {
           xml.gen_setup{

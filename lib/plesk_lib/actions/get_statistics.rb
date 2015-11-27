@@ -4,7 +4,7 @@ class PleskLib::Actions::GetStatistics < PleskLib::Actions::Base
   def build_xml
     xml = Builder::XmlMarkup.new
     xml.instruct!
-    xml.packet(:version => '1.6.3.5') {
+    xml.packet {
       xml.server{
         xml.get{
           xml.stat()

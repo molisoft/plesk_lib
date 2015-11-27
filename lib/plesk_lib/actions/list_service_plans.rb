@@ -18,7 +18,7 @@ class PleskLib::Actions::ListServicePlans < PleskLib::Actions::Base
   def build_xml
     xml = Builder::XmlMarkup.new
     xml.instruct!
-    xml.packet(:version => '1.6.3.5') {
+    xml.packet {
       xml.tag!('service-plan') {
         xml.get {
           xml.filter

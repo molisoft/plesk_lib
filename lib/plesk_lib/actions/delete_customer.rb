@@ -10,7 +10,7 @@ class PleskLib::Actions::DeleteCustomer < PleskLib::Actions::Base
   def build_xml
     xml = Builder::XmlMarkup.new
     xml.instruct!
-    xml.packet(:version => '1.6.3.5') {
+    xml.packet {
       xml.customer {
         xml.del{
           xml.filter{

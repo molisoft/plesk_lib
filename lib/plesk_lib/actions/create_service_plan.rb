@@ -8,7 +8,7 @@ class PleskLib::Actions::CreateServicePlan < PleskLib::Actions::Base
   def build_xml
     xml = Builder::XmlMarkup.new
     xml.instruct!
-      xml.packet(:version => '1.6.3.0') {
+      xml.packet {
         xml.tag!("service-plan")  {
           xml.add {
             xml.name("#{service_plan.name}")
