@@ -8,7 +8,7 @@ class PleskLib::Actions::ListCustomers < PleskLib::Actions::Base
     'pcode' => 'postal_code', 'country' => 'country', 'locale' => 'locale',
     'guid' => 'guid', 'owner-id' => 'owner_id', 'vendor-guid' => 'vendor_guid',
     'external-id' => 'external_id', 'password' => 'password',
-    'password_type' => 'password_type'
+    'password_type' => 'password_type', 'id' => 'id',
   }
 
   def initialize(owner_id = nil)
@@ -44,6 +44,7 @@ class PleskLib::Actions::ListCustomers < PleskLib::Actions::Base
                 attribute_node.text.blank?
         customer.send("#{customer_attribute}=", attribute_node.text)
       end
+      customer.id = customer_node.id.text.to_i
       customer.status = customer.status.to_i
       @customers << customer
     end

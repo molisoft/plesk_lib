@@ -2,7 +2,7 @@ module PleskLib
   class Account
     attr_accessor :company_name, :login, :password, :person_name, :status,
                   :phone, :fax, :address, :city, :state, :email, :country,
-                  :postal_code, :external_id, :owner_id
+                  :postal_code, :external_id, :owner_id, :id 
 
     def initialize(login, other_attributes = {})
       @login = login
