@@ -14,7 +14,7 @@ class PleskLib::Actions::DeleteCustomer < PleskLib::Actions::Base
       xml.customer {
         xml.del{
           xml.filter{
-            xml.login(@customer.login)
+            xml.id(@customer.id)
           }
         }
       }

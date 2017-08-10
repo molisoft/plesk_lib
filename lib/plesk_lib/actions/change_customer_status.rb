@@ -20,7 +20,7 @@ class PleskLib::Actions::ChangeCustomerStatus < PleskLib::Actions::Base
       xml.customer {
         xml.set{
           xml.filter{
-            xml.login(@customer.login)
+            xml.id(@customer.id)
           }
           xml.values{
             xml.gen_info{
